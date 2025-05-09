@@ -1,14 +1,12 @@
 ---
 lab:
-  title: Verwenden einer benutzerdefinierten Funktion in einem KI-Agent
-  description: 'Erfahren Sie, wie Sie Funktionen verwenden, um Ihren Agents benutzerdefinierte Funktionen hinzuzufügen.'
+  title: Entwickeln eines KI-Agents
+  description: 'Verwenden Sie den Azure AI Agent-Dienst, um einen Agent zu entwickeln, der integrierte Tools verwendet.'
 ---
 
-# Verwenden einer benutzerdefinierten Funktion in einem KI-Agent
+# Entwickeln eines KI-Agents
 
-In dieser Übung erfahren Sie, wie Sie einen Agent erstellen, der benutzerdefinierte Funktionen als Tool zum Ausführen von Aufgaben verwenden kann.
-
-Sie erstellen einen einfachen technischen Support Agent, der Details zu einem technischen Problem sammeln und ein Supportticket generieren kann.
+In dieser Übung verwenden Sie Azure AI Agent-Dienst, um einen einfachen Agent zu erstellen, der Daten analysiert und Diagramme erstellt. Der Agent nutzt das eingebaute Tool *Code-Interpreter*, um den Code, der zum Erstellen von Diagrammen als Bilder gebraucht wird, dynamisch zu generieren, und speichert dann die resultierenden Diagramm-Bilder.
 
 Diese Übung dauert ca. **30** Minuten.
 
@@ -64,9 +62,9 @@ Jetzt können Sie ein generatives KI-Sprachmodell bereitstellen, um Ihren Agent 
 
 1. Warten Sie, bis die Bereitstellung abgeschlossen ist.
 
-## Entwickeln eines Agents, der Funktionstools verwendet
+## Erstellen einer Agent-Client-App 
 
-Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine App, die einen Agent mit benutzerdefinierten Funktionstools implementiert.
+Jetzt können Sie eine Client-App erstellen, die einen Agent verwendet. Ein Teil des Codes wurde für Sie in einem GitHub-Repository bereitgestellt.
 
 ### Klonen des Repositorys mit dem Anwendungscode
 
@@ -96,11 +94,11 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
 1. Geben Sie den folgenden Befehl ein, um das Arbeitsverzeichnis in den Ordner mit den Codedateien zu ändern und alle aufzulisten.
 
     ```
-   cd ai-agents/Labfiles/03-ai-agent-functions/Python
+   cd ai-agents/Labfiles/02-build-ai-agent/Python
    ls -a -l
     ```
 
-    Die bereitgestellten Dateien enthalten Anwendungscode und eine Datei für Einstellungen der Konfiguration.
+    Die bereitgestellten Dateien umfassen Anwendungscode, Konfigurationseinstellungen und Daten.
 
 ### Konfigurieren der Anwendungseinstellungen
 
@@ -111,8 +109,6 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
    ./labenv/bin/Activate.ps1
    pip install python-dotenv azure-identity azure-ai-projects
     ```
-
-    >**Hinweis:** Sie können alle während der Installation der Bibliothek angezeigten Warn- oder Fehlermeldungen ignorieren.
 
 1. Geben Sie den folgenden Befehl ein, um die bereitgestellte Konfigurationsdatei zu bearbeiten:
 
@@ -125,62 +121,27 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
 1. Ersetzen Sie in der Codedatei den Platzhalter **your_project_connection_string** mit der Verbindungszeichenfolge für Ihr Projekt (kopiert von der Projektseite **Übersicht** im Azure AI Foundry-Portal) und den Platzhalter **your_model_deployment** mit dem Namen, den Sie Ihrer gpt-4o-Modell-Bereitstellung zugewiesen haben.
 1. Nachdem Sie die Platzhalter ersetzt haben, verwenden Sie den Befehl **STRG+S**, um Ihre Änderungen zu speichern, und verwenden Sie dann den Befehl **STRG+Q**, um den Code-Editor zu schließen, während die Befehlszeile der Cloud Shell geöffnet bleibt.
 
-### Definieren einer benutzerdefinierten Funktion
+### Schreiben von Code für eine Agent-App.
 
-1. Geben Sie den folgenden Befehl ein, um die Codedatei zu bearbeiten, die für Ihren Funktionscode bereitgestellt wurde:
+> **Tipp**: Achten Sie beim Hinzufügen von Code auf den richtigen Einzug. Verwenden Sie die Einzugsebenen für Kommentare als Orientierungshilfe.
 
-    ```
-   code user_functions.py
-    ```
-
-1. Suchen Sie den Kommentar **Erstellen Sie eine Funktion zum Einreichen eines Supporttickets** und fügen Sie den folgenden Code ein, der eine Ticketnummer generiert und ein Supportticket als Textdatei speichert.
-
-    ```python
-   # Create a function to submit a support ticket
-   def submit_support_ticket(email_address: str, description: str) -> str:
-        script_dir = Path(__file__).parent  # Get the directory of the script
-        ticket_number = str(uuid.uuid4()).replace('-', '')[:6]
-        file_name = f"ticket-{ticket_number}.txt"
-        file_path = script_dir / file_name
-        text = f"Support ticket: {ticket_number}\nSubmitted by: {email_address}\nDescription:\n{description}"
-        file_path.write_text(text)
-    
-        message_json = json.dumps({"message": f"Support ticket {ticket_number} submitted. The ticket file is saved as {file_name}"})
-        return message_json
-    ```
-
-1. Suchen Sie den Kommentar **Definieren Sie eine Reihe von aufrufbaren Funktionen** und fügen Sie den folgenden Code hinzu, der statisch eine Reihe von aufrufbaren Funktionen in dieser Codedatei definiert (in diesem Fall gibt es nur eine - aber in einer echten Lösung haben Sie vielleicht mehrere Funktionen, die Ihr Agent aufrufen kann):
-
-    ```python
-   # Define a set of callable functions
-   user_functions: Set[Callable[..., Any]] = {
-        submit_support_ticket
-    }
-    ```
-1. Speichern Sie die Datei (*CTRL+S*).
-
-### Schreiben von Code zum Implementieren eines Agents, der Ihre Funktion verwenden kann
-
-1. Geben Sie den folgenden Befehl ein, um mit der Bearbeitung des Agent-Codes zu beginnen.
+1. Geben Sie den folgenden Befehl ein, um die bereitgestellte Codedatei zu bearbeiten:
 
     ```
-    code agent.py
+   code agent.py
     ```
 
-    > **Tipp**: Achten Sie beim Hinzufügen von Code zur Codedatei darauf, den richtigen Einzug beizubehalten.
-
-1. Überprüfen Sie den vorhandenen Code, der die Anwendungskonfigurations-Einstellungen abruft, und richtet eine Schleife ein, in der die benutzende Person Eingabeaufforderungen für den Agent eingeben kann. Der Rest der Datei enthält Kommentare, in die Sie den notwendigen Code für die Implementierung Ihres technischen Support-Agent einfügen.
-1. Suchen Sie den Kommentar **Referenzen hinzufügen** und fügen Sie den folgenden Code hinzu, um die Klassen zu importieren, die Sie benötigen, um einen Azure AI-Agent zu erstellen, der Ihren Funktionscode als Tool verwendet:
+1. Überprüfen Sie den vorhandenen Code, der die Anwendungskonfigurationseinstellungen abruft und Daten aus *data.txt* zur Analyse lädt. Der Rest der Datei enthält Kommentare, in denen Sie den erforderlichen Code hinzufügen, um Ihren Datenanalyse-Agent zu implementieren.
+1. Suchen Sie den Kommentar **Add references** und fügen Sie den folgenden Code hinzu, um die Klassen zu importieren, die Sie zum Erstellen eines Azure AI-Agents benötigen, der das integrierte Code-Interpreter-Tool verwendet:
 
     ```python
    # Add references
    from azure.identity import DefaultAzureCredential
    from azure.ai.projects import AIProjectClient
-   from azure.ai.projects.models import FunctionTool, ToolSet
-   from user_functions import user_functions
+   from azure.ai.projects.models import FilePurpose, CodeInterpreterTool
     ```
 
-1. Suchen Sie den Kommentar **Verbinden Sie mit dem Azure AI Foundry-Projekt** und fügen Sie den folgenden Code hinzu, um eine Verbindung mit dem Azure AI-Projekt unter Verwendung der aktuellen Azure-Anmeldeinformationen herzustellen.
+1. Suchen Sie den Kommentar **Connect to the Azure AI Foundry project** und fügen Sie den folgenden Code hinzu, um eine Verbindung zum Azure KI-Projekt herzustellen.
 
     > **Tipp**: Achten Sie darauf, die richtige Einzugsebene beizubehalten.
 
@@ -192,47 +153,58 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
              exclude_managed_identity_credential=True),
         conn_str=PROJECT_CONNECTION_STRING
    )
+   with project_client:
     ```
-    
-1. Suchen Sie den Abschnitt **Definieren Sie einen Agenten, der die benutzerdefinierten Funktionen verwenden kann**, und fügen Sie den folgenden Code hinzu, um Ihren Funktionscode zu einem Toolset hinzuzufügen, und erstellen Sie dann einen Agenten, der das Toolset und einen Thread verwenden kann, auf dem die Chatsitzung läuft.
+
+    Der Code stellt mithilfe der aktuellen Azure-Anmeldeinformationen eine Verbindung mit dem Azure AI Foundry-Projekt her. Die abschließende Anweisung *with project_client* startet einen Codeblock, der den Geltungsbereich des Clients definiert und sicherstellt, dass dieser bereinigt wird, wenn der Code innerhalb des Blocks beendet ist.
+
+1. Suchen Sie den Kommentar **Upload the data file and create a CodeInterpreterTool** innerhalb des Blocks *with project_client* und fügen Sie den folgenden Code hinzu, um die Datendatei in das Projekt hochzuladen und ein CodeInterpreterTool zu erstellen, das auf die darin enthaltenen Daten zugreifen kann:
 
     ```python
-   # Define an agent that can use the custom functions
-   with project_client:
+   # Upload the data file and create a CodeInterpreterTool
+   file = project_client.agents.upload_file_and_poll(
+        file_path=file_path, purpose=FilePurpose.AGENTS
+   )
+   print(f"Uploaded {file.filename}")
 
-        functions = FunctionTool(user_functions)
-        toolset = ToolSet()
-        toolset.add(functions)
-            
-        agent = project_client.agents.create_agent(
-            model=MODEL_DEPLOYMENT,
-            name="support-agent",
-            instructions="""You are a technical support agent.
-                            When a user has a technical issue, you get their email address and a description of the issue.
-                            Then you use those values to submit a support ticket using the function available to you.
-                            If a file is saved, tell the user the file name.
-                         """,
-            toolset=toolset
-        )
+   code_interpreter = CodeInterpreterTool(file_ids=[file.id])
+    ```
+    
+1. Suchen Sie den Kommentar **Define an agent that uses the CodeInterpreterTool** und fügen Sie den folgenden Code hinzu, um einen KI-Agent zu definieren, der Daten analysiert und das zuvor definierte Code-Interpreter-Tool verwenden kann:
 
-        thread = project_client.agents.create_thread()
-        print(f"You're chatting with: {agent.name} ({agent.id})")
-
+    ```python
+   # Define an agent that uses the CodeInterpreterTool
+   agent = project_client.agents.create_agent(
+        model=MODEL_DEPLOYMENT,
+        name="data-agent",
+        instructions="You are an AI agent that analyzes the data in the file that has been uploaded. If the user requests a chart, create it and save it as a .png file.",
+        tools=code_interpreter.definitions,
+        tool_resources=code_interpreter.resources,
+   )
+   print(f"Using agent: {agent.name}")
     ```
 
-1. Suchen Sie den Kommentar **Senden Sie eine Eingabeaufforderung an den Agent** und fügen Sie den folgenden Code hinzu, um die Eingabeaufforderung der Benutzenden als Nachricht hinzuzufügen und den Thread auszuführen.
+1. Suchen Sie den Kommentar **Create a thread for the conversation** und fügen Sie den folgenden Code hinzu, um einen Thread zu starten, in dem die Chat-Sitzung mit dem Agent ausgeführt wird:
+
+    ```python
+   # Create a thread for the conversation
+   thread = project_client.agents.create_thread()
+    ```
+    
+1. Beachten Sie, dass im nächsten Abschnitt des Codes eine Schleife eingerichtet wird, in der die benutzende Person einen Prompt eingibt, der beendet wird, wenn die Person „quit“ eingibt.
+
+1. Suchen Sie den Kommentar **Send a prompt to the agent** und fügen Sie den folgenden Code hinzu, um eine Benutzermeldung zum Prompt hinzuzufügen (zusammen mit den Daten aus der zuvor geladenen Datei), und führen Sie dann den Thread mit dem Agent aus.
 
     ```python
    # Send a prompt to the agent
    message = project_client.agents.create_message(
         thread_id=thread.id,
         role="user",
-        content=user_prompt
-   )
-   run = project_client.agents.create_and_process_run(thread_id=thread.id, agent_id=agent.id)
-    ```
+        content=user_prompt,
+    )
 
-    > **Hinweis**: Die Verwendung der Methode **create_and_process_run** zur Ausführung des Threads ermöglicht es dem Agenten, Ihre Funktionen automatisch zu finden und sie anhand ihrer Namen und Parameter zu verwenden. Alternativ könnten Sie die Methode **create_run** verwenden. In diesem Fall wären Sie dafür verantwortlich, Code zu schreiben, der den Ausführungsstatus abfragt, um festzustellen, wann ein Funktionsaufruf erforderlich ist, die Funktion aufruft und die Ergebnisse an den Agent zurückgibt.
+    run = project_client.agents.create_and_process_run(thread_id=thread.id, agent_id=agent.id)
+     ```
 
 1. Suchen Sie den Kommentar **Prüfen Sie den Ausführungsstatus auf Fehler** und fügen Sie den folgenden Code ein, um alle auftretenden Fehler anzuzeigen.
 
@@ -263,6 +235,15 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
         print(f"{message_data.role}: {last_message_content.text.value}\n")
     ```
 
+1. Suchen Sie den Kommentar **Abrufen aller erzeugten Dateien** und fügen Sie den folgenden Code hinzu, um alle Dateipfad-Anmerkungen aus den Nachrichten zu erhalten (die anzeigen, dass der Agent eine Datei in seinem internen Speicher gespeichert hat) und die Dateien in den Anwendungsordner zu kopieren.
+
+    ```python
+   # Get any generated files
+   for file_path_annotation in messages.file_path_annotations:
+        project_client.agents.save_file(file_id=file_path_annotation.file_path.file_id, file_name=Path(file_path_annotation.text).name)
+        print(f"File saved as {Path(file_path_annotation.text).name}")
+    ```
+
 1. Suchen Sie den Kommentar **Aufräumen** und fügen Sie den folgenden Code ein, um den Agent und den Thread zu löschen, wenn er nicht mehr benötigt wird.
 
     ```python
@@ -272,12 +253,14 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
     ```
 
 1. Überprüfen Sie den Code mithilfe der Kommentare, um zu verstehen, wie er:
-    - Fügt Ihren Satz von benutzerdefinierten Funktionen zu einem Toolset hinzu.
-    - Erstellt einen Agent, der das Toolset verwendet.
-    - Führt einen Thread mit einer Eingabeaufforderungsmeldung der benutzenden Person aus.
+    - Verbindet sich mit dem AI Foundry Projekt.
+    - Lädt die Datendatei hoch und erstellt ein Code-Interpreter-Tool, das auf die Datei zugreifen kann.
+    - Erstellt einen neuen Agent, der das Codedolmetschertool verwendet, und verfügt über explizite Anweisungen zum Analysieren der Daten und Erstellen von Diagrammen als .png Dateien.
+    - Führt einen Thread mit einer Eingabeaufforderungsmeldung der benutzenden Person zusammen mit den zu analysierenden Daten aus.
     - Überprüft den Status der Ausführung, falls ein Fehler auftritt
     - Ruft die Nachrichten aus dem abgeschlossenen Thread ab und zeigt die letzte vom Agenten gesendete Nachricht an.
     - Zeigt die aufgezeichneten Unterhaltungen an.
+    - Speichert jede generierte Datei.
     - Löscht den Agent und den Thread, wenn er nicht mehr benötigt wird.
 
 1. Speichern Sie die Codedatei (*STRG+S*), wenn Sie fertig sind. Sie können auch den Code-Editor (*STRG+Q*) schließen. Möglicherweise möchten Sie ihn jedoch geöffnet lassen, falls Sie Änderungen an dem Code vornehmen müssen, den Sie hinzugefügt haben. Lassen Sie in beiden Fällen den Befehlszeilenbereich der Cloud Shell geöffnet.
@@ -298,35 +281,46 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
 1. Geben Sie nach der Anmeldung den folgenden Befehl ein, um die Anwendung auszuführen:
 
     ```
-   python agent.py
+    python agent.py
     ```
     
     Die Anwendung wird mit den Anmeldeinformationen für Ihre authentifizierte Azure-Sitzung ausgeführt, um eine Verbindung zu Ihrem Projekt herzustellen und den Agent zu erstellen und auszuführen.
 
-1. Wenn Sie dazu aufgefordert werden, geben Sie eine Eingabeaufforderung, wie etwa:
+1. Wenn Sie dazu aufgefordert werden, zeigen Sie die Daten an, die die Anwendung aus der Textdatei *data.txt* geladen hat. Geben Sie dann eine Eingabeaufforderung wie die folgende ein:
 
     ```
-   I have a technical problem
+   What's the category with the highest cost?
     ```
 
     > **Tipp**: Wenn die App fehlschlägt, weil das Ratenlimit überschritten wird. Warten Sie einige Sekunden, und versuchen Sie es noch mal. Wenn in Ihrem Abonnement nicht genügend Kontingent verfügbar ist, kann das Modell möglicherweise nicht reagieren.
 
-1. Zeigen Sie die Antwort an. Der Agent kann Sie um Ihre E-Mail-Adresse und eine Beschreibung des Problems bitten. Sie können eine beliebige E-Mail-Adresse (zum Beispiel `alex@contoso.com`) und eine beliebige Problembeschreibung (zum Beispiel `my computer won't start`) verwenden.
+1. Zeigen Sie die Antwort an. Geben Sie dann eine weitere Eingabeaufforderung ein, diesmal zur Anforderung eines Diagramms:
 
-    Wenn es über genügend Informationen verfügt, sollte der Agent ihre Funktion nach Bedarf verwenden.
+    ```
+   Create a pie chart showing cost by category
+    ```
+
+    Der Agent sollte das Code-Interpreter-Tool bei Bedarf selektiv einsetzen, in diesem Fall zur Erstellung eines Diagramms auf der Grundlage Ihrer Anfrage.
 
 1. Sie können die Unterhaltung fortsetzen, wenn Sie möchten. Der Thread ist *statusbehaftet*,er behält die aufgezeichneten Unterhaltungen bei, was bedeutet, dass der Agent den vollständigen Kontext für jede Antwort hat. Geben Sie `quit` ein, wenn Sie fertig sind.
-1. Überprüfen Sie die Unterhaltungsnachrichten, die aus dem Thread abgerufen wurden, und die Tickets, die generiert wurden.
-1. Das Tool sollte Supporttickets im App-Ordner gespeichert haben. Sie können den Befehl `ls` verwenden, um zu prüfen, und dann den Befehl `cat` verwenden, um den Inhalt der Datei anzuzeigen, etwa so:
+1. Überprüfen Sie die Unterhaltungsnachrichten, die aus dem Thread abgerufen wurden, und die erzeugten Dateien.
+
+1. Wenn die Anwendung beendet ist, verwenden Sie den Befehl **download** der Cloud Shell, um jede .png-Datei herunterzuladen, die im App-Ordner gespeichert wurde. Zum Beispiel:
 
     ```
-   cat ticket-<ticket_num>.txt
+   download ./<file_name>.png
     ```
+
+    Der Downloadbefehl erstellt unten rechts im Browser einen Popuplink, den Sie auswählen können, um die Datei herunterzuladen und zu öffnen.
+
+## Zusammenfassung
+
+In dieser Übung haben Sie das Azure AI Agent-Dienst SDK verwendet, um eine Client-Anwendung zu erstellen, die einen KI-Agent verwendet. Der Agent verwendet das integrierte Code-Interpreter-Tool, um dynamischen Code auszuführen, der Bilder erstellt.
 
 ## Bereinigen
 
-Nachdem Sie die Übung beendet haben, sollten Sie die von Ihnen erstellten Cloud-Ressourcen löschen, um eine unnötige Ressourcennutzung zu vermeiden.
+Wenn Sie die Erkundung des Azure AI Agent-Dienstes abgeschlossen haben, sollten Sie die Ressourcen, die Sie in dieser Übung erstellt haben, löschen, um unnötige Azure-Kosten zu vermeiden.
 
-1. Öffnen Sie das [Azure-Portal](https://portal.azure.com) unter `https://portal.azure.com` und zeigen Sie den Inhalt der Ressourcengruppe an, in der Sie die in dieser Übung verwendeten Hub-Ressourcen bereitgestellt haben.
+1. Kehren Sie zu der Browserregisterkarte zurück, die das Azure-Portal enthält (oder öffnen Sie das [Azure-Portal](https://portal.azure.com) unter `https://portal.azure.com` erneut in einer neuen Browserregisterkarte) und sehen Sie sich den Inhalt der Ressourcengruppe an, in der Sie die in dieser Übung verwendeten Ressourcen bereitgestellt haben.
 1. Wählen Sie auf der Symbolleiste die Option **Ressourcengruppe löschen** aus.
 1. Geben Sie den Namen der Ressourcengruppe ein, und bestätigen Sie, dass Sie sie löschen möchten.
