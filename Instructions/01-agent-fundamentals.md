@@ -1,12 +1,12 @@
 ---
 lab:
   title: Erkunden der KI-Agent-Entwicklung
-  description: 'Führen Sie Ihre ersten Schritte bei der Entwicklung von KI-Agents durch, indem Sie die Azure AI Agent-Diensttools im Azure AI Foundry-Portal erkunden.'
+  description: 'Führen Sie Ihre ersten Schritte bei der Entwicklung von KI-Agents durch, indem Sie den Azure AI Agent-Dienst im Azure AI Foundry-Portal erkunden.'
 ---
 
 # Erkunden der KI-Agent-Entwicklung
 
-In dieser Übung verwenden Sie die Tools des Azure AI Agent-Dienstes im Azure AI Foundry-Portal, um einen einfachen KI-Agent zu erstellen, der Fragen zu Ausgabenabrechnungen beantwortet.
+In dieser Übung verwenden Sie den Azure AI Agent-Dienst im Azure AI Foundry-Portal, um einen einfachen KI-Agent zu erstellen, der Mitarbeitende bei Ausgabenabrechnungen unterstützt.
 
 Diese Übung dauert ca. **30** Minuten.
 
@@ -72,7 +72,13 @@ Nachdem Sie nun ein Modell bereitgestellt haben, können Sie einen KI-Agent erst
 
     Ein neuer Agent mit einem Namen wie *Agent123* sollte automatisch erstellt werden (falls nicht, verwenden Sie die Schaltfläche **+ Neuer Agent**, um einen zu erstellen).
 
-1. Wählen Sie Ihren neuen Agent. Setzen Sie dann im Bereich **Setup** für Ihren neuen Agenten den **Agentenname** auf `ExpensesAgent`, stellen Sie sicher, dass die zuvor erstellte gpt-4o-Modellbereitstellung ausgewählt ist, und setzen Sie die **Anweisungen** auf `Answer questions related to expense claims`.
+1. Wählen Sie Ihren neuen Agent. Setzen Sie dann im Bereich **Setup** für Ihren neuen Agenten den **Agentenname** auf `ExpensesAgent`, stellen Sie sicher, dass die zuvor erstellte gpt-4o-Modellbereitstellung ausgewählt ist, und setzen Sie die **Anweisungen** auf:
+
+    ```prompt
+   You are an AI assistant for corporate expenses.
+   You answer questions about expenses based on the expenses policy data.
+   If a user wants to submit an expense claim, you get their email address, a description of the claim, and the amount to be claimed and write the claim details to a text file that the user can download.
+    ```
 
     ![Screenshot der KI-Agent-Einrichtungsseite im Azure AI Foundry-Portal.](./Media/ai-agent-setup.png)
 
@@ -83,7 +89,9 @@ Nachdem Sie nun ein Modell bereitgestellt haben, können Sie einen KI-Agent erst
 
 1. Überprüfen Sie im Bereich **Setup** im Abschnitt **Wissen**, dass **Expenses_Vector_Store** aufgelistet ist und als 1 Datei enthaltend angezeigt wird.
 
-    > **Hinweis**: Sie können auch **Aktionen** zu einem Agent hinzufügen, um Aufgaben zu automatisieren. In diesem einfachen Beispiel für einen Informationsbeschaffungs-Agent sind keine Aktionen erforderlich.
+1. Wählen Sie unter dem Abschnitt **Wissen** neben **Aktionen** **+Hinzufügen** aus. Wählen Sie dann im Dialogfeld **Aktion hinzufügen** den **Code-Interpreter** und dann **Speichern** aus (Sie müssen keine Dateien für den Code-Interpreter hochladen).
+
+    Ihr Agent verwendet das Dokument, das Sie als Wissensquelle hochgeladen haben, um seine Antworten zu *begründen* (mit anderen Worten, er beantwortet Fragen basierend auf dem Inhalt dieses Dokuments). Es wird das Code-Interpreter-Tool verwenden, um Aktionen auszuführen, indem er seinen eigenen Python-Code generiert und ausführt.
 
 ## Testen Sie Ihren Agent
 
@@ -92,11 +100,16 @@ Nachdem Sie nun einen Agent erstellt haben, können Sie ihn im Azure AI Foundry-
 1. Wählen Sie oben im Bereich **Setup** für Ihren Agenten die Option **TRY im Playground **.
 1. Geben Sie im Playground die Eingabeaufforderung `What's the maximum I can claim for meals?` ein und überprüfen Sie die Antwort des Agenten, die auf den Informationen in dem Dokument zur Ausgabenpolitik basieren sollte, das Sie als Wissen zur Einrichtung des Agents hinzugefügt haben.
 
-    ![Screenshot des Agent Playground im Azure AI Foundry Portal.](./Media/ai-agent-playground.png)
-
     > **Hinweis**: Wenn der Agent nicht antwortet, weil das Ratenlimit überschritten ist. Warten Sie einige Sekunden, und versuchen Sie es noch mal. Wenn in Ihrem Abonnement nicht genügend Kontingent verfügbar ist, kann das Modell möglicherweise nicht reagieren.
 
-1. Versuchen Sie es mit einer Folgefrage, z. B. `What about accommodation?`, und prüfen Sie die Antwort.
+1. Versuchen Sie die folgende Folgeäußerung `I'd like to submit a claim for a meal.` und überprüfen Sie die Antwort: Der Agent sollte Sie um die erforderlichen Informationen bitten, um einen Anspruch zu übermitteln.
+1. Stellen Sie dem Agenten eine E-Mail-Adresse zur Verfügung; zum Beispiel: `fred@contoso.com`. Der Agent sollte die Antwort bestätigen und die verbleibenden Informationen anfordern, die für den Ausgabenanspruch erforderlich sind (Beschreibung und Betrag)
+1. Übermitteln Sie eine Eingabeaufforderung, die den Anspruch und den Betrag beschreibt; zum Beispiel: `Breakfast cost me $20`.
+1. Der Agent sollte den Code-Interpreter verwenden, um die Textdatei für die Spesenabrechnung vorzubereiten und einen Link bereitzustellen, damit Sie sie herunterladen können.
+
+    ![Screenshot des Agent Playground im Azure AI Foundry Portal.](./Media/ai-agent-playground.png)
+
+1. Laden Sie das Textdokument herunter, und öffnen Sie es, um die Ausgabenanspruchsdetails anzuzeigen.
 
 ## Bereinigen
 
