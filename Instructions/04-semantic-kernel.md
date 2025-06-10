@@ -6,61 +6,39 @@ lab:
 
 # Entwickeln von Azure KI-Agents mit dem Semantischer-Kernel-SDK
 
-In dieser Übung verwenden Sie den Azure AI Agent-Dienst und den semantischen Kernel, um einen KI-Agent zu erstellen, der eine Spesenabrechnungs-E-Mail erstellt.
+In dieser Übung verwenden Sie den Azure AI Agent-dienst und den semantischen Kernel, um einen KI-Agent zu erstellen, der Spesenforderungen verarbeitet.
 
 Diese Übung dauert ca. **30** Minuten.
 
 > **Hinweis**: Einige der in dieser Übung verwendeten Technologien befinden sich in der Vorschau oder in der aktiven Entwicklung. Es kann zu unerwartetem Verhalten, Warnungen oder Fehlern kommen.
 
-## Erstellen eines Azure KI Foundry-Projekts
+## Bereitstellen Sie ein DALL-E-Modell in einem Azure KI Foundry-Projekt
 
-Beginnen wir mit dem Erstellen eines Azure AI Foundry-Projekts.
+Beginnen wir mit dem Erstellen eines Azure KI Foundry-Projekts.
 
 1. Öffnen Sie in einem Webbrowser unter `https://ai.azure.com` das [Azure KI Foundry-Portal](https://ai.azure.com) und melden Sie sich mit Ihren Azure-Anmeldeinformationen an. Schließen Sie alle Tipps oder Schnellstartfenster, die bei der ersten Anmeldung geöffnet werden, und verwenden Sie gegebenenfalls das Logo **Azure AI Foundry** oben links, um zur Startseite zu navigieren, die ähnlich wie die folgende Abbildung aussieht (schließen Sie das **Hilfe**-Fenster, falls es geöffnet ist):
 
     ![Screenshot des Azure KI Foundry-Portals.](./Media/ai-foundry-home.png)
 
-1. Wählen Sie auf der Startseite **+ Projekt erstellen**.
-1. Geben Sie im Assistenten **Projekt erstellen** einen gültigen Namen für Ihr Projekt ein und wählen Sie, falls ein vorhandener Hub vorgeschlagen wird, die Option, einen neuen zu erstellen. Überprüfen Sie dann die Azure-Ressourcen, die automatisch erstellt werden, um Ihren Hub und Ihr Projekt zu unterstützen.
-1. Wählen Sie **Anpassen** aus und legen Sie die folgenden Einstellungen für Ihren Hub fest:
-    - **Hubname**: *Geben Sie einen gültigen Namen für Ihren Hub an*
+1. Suchen Sie auf der Startseite im Abschnitt **Modelle und Funktionen erkunden** nach dem Modell `gpt-4o`, das wir in unserem Projekt verwenden werden.
+1. Wählen Sie in den Suchergebnissen das Modell **gpt-4o** aus, um dessen Details anzuzeigen, und wählen Sie dann oben auf der Seite für das Modell die Option **Dieses Modell verwenden** aus.
+1. Wenn Sie zum Erstellen eines Projekts aufgefordert werden, geben Sie einen gültigen Namen für Ihr Projekt ein und erweitern Sie **Erweiterte Optionen**.
+1. Bestätigen Sie die folgenden Einstellungen für Ihr Projekt:
+    - **Azure KI Foundry-Ressource**: *Ein gültiger Name für Ihre Azure KI Foundry-Ressource*
     - **Abonnement:** *Geben Sie Ihr Azure-Abonnement an.*
     - **Ressourcengruppe**: *Erstellen Sie eine Ressourcengruppe, oder wählen Sie eine Ressourcengruppe aus*.
-    - **Standort:** Wählen Sie eine der folgenden Regionen aus:\*
-        - eastus
-        - eastus2
-        - swedencentral
-        - westus
-        - westus3
-    - A**zure KI Services oder Azure OpenAI verbinden**: *Wählen Sie Neuen KI-Dienst erstellen aus*
-    - **Azure KI-Suche verbinden**: Verbindung überspringen
+    - **Region**: *Wählen Sie einen beliebigen Standort aus, an dem KI Services unterstützt wird***\*
 
-    > \* Zum Zeitpunkt des Schreibens unterstützen diese Regionen das gpt-4o-Modell für die Nutzung in Agents. Die Modellverfügbarkeit wird durch regionale Kontingente eingeschränkt. Sollte im weiteren Verlauf der Übung eine Kontingentgrenze erreicht werden, besteht die Möglichkeit, dass Sie ein weiteres Projekt in einer anderen Region erstellen müssen.
+    > \* Einige Azure KI-Ressourcen unterliegen regionalen Modellkontingenten. Sollte im weiteren Verlauf der Übung eine Kontingentgrenze überschritten werden, müssen Sie möglicherweise eine weitere Ressource in einer anderen Region anlegen.
 
-1. Klicken Sie auf **Weiter**, um Ihre Konfiguration zu überprüfen. Klicken Sie auf **Erstellen** und warten Sie, bis der Vorgang abgeschlossen ist.
-1. Sobald Ihr Projekt erstellt wurde, schließen Sie alle angezeigten Tipps und überprüfen Sie die Projektseite im Azure AI Foundry-Portal, die in etwa wie in der folgenden Abbildung aussehen sollte:
+1. Wählen Sie **Erstellen** und warten Sie, bis Ihr Projekt einschließlich der von Ihnen ausgewählten GPT-4-Modellbereitstellung erstellt wurde.
+1. Wenn Ihr Projekt erstellt wird, wird der Chat-Playground automatisch geöffnet.
+1. Notieren Sie sich im Bereich **Setup** den Namen Ihrer Modellbereitstellung, der **gpt-4o** lauten sollte. Sie können dies überprüfen, indem Sie die Bereitstellung auf der Seite **Modelle und Endpunkte** anzeigen (öffnen Sie dazu einfach diese Seite im Navigationsbereich auf der linken Seite).
+1. Wählen Sie im Navigationsbereich auf der linken Seite **Übersicht**, um die Hauptseite Ihres Projekts anzuzeigen, die wie folgt aussieht:
+
+    > **Hinweis**: Wenn die Fehlermeldung *Unzureichende Berechtigungen** angezeigt wird, klicken Sie auf die Schaltfläche „**Beheben**“, um das Problem zu beheben.
 
     ![Screenshot eines Azure KI-Projekts im Azure AI Foundry-Portal.](./Media/ai-foundry-project.png)
-
-## Bereitstellen eines generativen KI-Modells
-
-Jetzt können Sie ein generatives KI-Sprachmodell bereitstellen, um Ihren Agent zu unterstützen.
-
-1. Wählen Sie im linken Fensterbereich für Ihr Projekt im Abschnitt **Meine Assets** die Seite **Modelle + Endpunkte**.
-1. Wählen Sie auf der Seite **Modelle + Endpunkte** auf der Registerkarte **Modellbereitstellungen** im Menü **+ Modell bereitstellen** die Option **Basismodell bereitstellen**.
-1. Suchen Sie das Modell **gpt-4o** in der Liste, wählen Sie es aus und bestätigen Sie es.
-1. Stellen Sie das Modell mit den folgenden Einstellungen bereit, indem Sie **Anpassen** in den Bereitstellungsdetails wählen:
-    - **Bereitstellungsname:***Ein eindeutiger Name für die Modellimplementierung*
-    - **Bereitstellungstyp**: Globaler Standard
-    - **Automatische Versionsaktualisierung**: Aktiviert
-    - **Modellversion**: *Wählen Sie die neueste verfügbare Version aus.*
-    - **Verbundene AI-Ressource**: *Wählen Sie Ihre Azure OpenAI-Ressourcenverbindung*
-    - **Tokens pro Minute Ratenlimit (Tausende)**: 50K *(oder das in Ihrem Abonnement verfügbare Maximum, wenn weniger als 50K)*
-    - **Inhaltsfilter**: StandardV2 
-
-    > **Hinweis:** Durch das Verringern des TPM wird die Überlastung des Kontingents vermieden, das in dem von Ihnen verwendeten Abonnement verfügbar ist. 50.000 TPM sollten für die in dieser Übung verwendeten Daten ausreichend sein. Wenn Ihr verfügbares Kontingent darunter liegt, können Sie die Übung zwar abschließen, müssen aber möglicherweise warten und die Prompts erneut senden, wenn das Kontingent überschritten wird.
-
-1. Warten Sie, bis die Bereitstellung abgeschlossen ist.
 
 ## Erstellen einer Agent-Client-App 
 
@@ -91,14 +69,14 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
 
     > **Tipp**: Wenn Sie Befehle in die Cloud Shell einfügen, kann die Ausgabe einen großen Teil des Bildschirmpuffers in Anspruch nehmen und der Cursor in der aktuellen Zeile kann verdeckt sein. Sie können den Bildschirm löschen, indem Sie den Befehl `cls` eingeben, um sich besser auf die einzelnen Aufgaben konzentrieren zu können.
 
-1. Wenn das Repository geklont wurde, geben Sie den folgenden Befehl ein, um das Arbeitsverzeichnis in den Ordner, der die Codedateien enthält, zu ändern und alle aufzulisten.
+1. Wenn das Repository geklont wurde, geben Sie den folgenden Befehl ein, um das Arbeitsverzeichnis in den Ordner mit den Codedateien zu ändern und alle aufzulisten.
 
     ```
    cd ai-agents/Labfiles/04-semantic-kernel/python
    ls -a -l
     ```
 
-    Die bereitgestellten Dateien enthalten Anwendungscode und eine Datei für Einstellungen der Konfiguration.
+    Die bereitgestellten Dateien enthalten Anwendungscode für Konfigurationseinstellungen und eine Datei mit Spesendaten.
 
 ### Konfigurieren der Anwendungseinstellungen
 
@@ -120,7 +98,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
 
     Die Datei wird in einem Code-Editor geöffnet.
 
-1. Ersetzen Sie in der Codedatei den Platzhalter **your_project_connection_string** mit der Verbindungszeichenfolge für Ihr Projekt (kopiert von der Projektseite **Übersicht** im Azure AI Foundry-Portal) und den Platzhalter **your_model_deployment** mit dem Namen, den Sie Ihrer gpt-4o-Modell-Bereitstellung zugewiesen haben.
+1. Ersetzen Sie in der Code-Datei den Platzhalter **your_project_endpoint** durch den Endpunkt für Ihr Projekt (kopiert von der Projektseite **Übersicht** im Azure AI Foundry-Portal) und den Platzhalter **your_model_deployment** durch den Namen, den Sie Ihrer gpt-4o-Modellbereitstellung zugewiesen haben.
 1. Nachdem Sie die Platzhalter ersetzt haben, verwenden Sie den Befehl **STRG+S**, um Ihre Änderungen zu speichern, und verwenden Sie dann den Befehl **STRG+Q**, um den Code-Editor zu schließen, während die Befehlszeile der Cloud Shell geöffnet bleibt.
 
 ### Schreiben von Code für eine Agent-App.
@@ -134,10 +112,10 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
     ```
 
 1. Sehen Sie sich den Code in der Datei an. Sie enthält folgende Elemente:
-    - Ein paar **Importanweisungen** zum Hinzufügen von Verweisen auf häufig verwendete Namespaces
-    - Eine *Hauptfunktion*, die Daten für eine Spesenabrechnung definiert (in einer echten Anwendung würde dies wahrscheinlich als Datei übermittelt werden) und dann Folgendes aufruft:
-    - Eine **create_expense_claim**-Funktion, in der der Code zum Erstellen und Verwenden des Agents hinzugefügt werden muss
-    - Eine **EmailPlugin**-Klasse, die eine Kernelfunktion mit dem Namen **send_email** enthält; diese wird von Ihrem Agent genutzt, um die Funktionalität zu simulieren, die zum Senden einer E-Mail verwendet wird.
+    - Einige **Importanweisungen** zum Hinzufügen von Verweisen auf häufig verwendete Namespaces
+    - Eine *Hauptfunktion*, die eine Datei mit Spesendaten lädt, den Benutzer nach Anweisungen fragt und dann aufruft ...
+    - Eine **process_expenses_data**-Funktion, in der der Code zum Erstellen und Verwenden des Agents hinzugefügt werden muss
+    - Eine **EmailPlugin**-Klasse, die eine Kernelfunktion mit dem Namen **send_email** enthält. Diese wird von Ihrem Agent verwendet, um die Funktionalität zum Senden einer E-Mail zu simulieren.
 
 1. Suchen Sie oben in der Datei nach der vorhandenen **Importanweisungen**, suchen Sie den Kommentar **Verweise hinzufügen**, und fügen Sie den folgenden Code hinzu, um auf die Namespaces in den Bibliotheken zu verweisen, die Sie zum Implementieren Ihres Agents benötigen:
 
@@ -212,7 +190,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
 
 1. Suchen Sie den Kommentar **Erstellen eines Semantischer-Kernel-Agents**, und fügen Sie den folgenden Code hinzu, um ein Semantischer-Kernel-Agent-Objekt für Ihren Azure KI-Agent zu erstellen, der einen Verweis auf das **EmailPlugin**-Plug-In enthält.
 
-    (Achten Sie darauf, die Ebene des Einzugs beizubehalten)
+    (Achten Sie darauf, die Einzugsebene beizubehalten)
 
     ```python
    # Create a semantic kernel agent
@@ -223,16 +201,16 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
    )
     ```
 
-1. Suchen Sie den Kommentar **Verwenden des Agents, um eine Spesenforderungs-E-Mail zu generieren**, fügen Sie den folgenden Code hinzu, um einen Thread zu erstellen, in dem Ihr Agent ausgeführt werden soll, und rufen Sie ihn dann mit einer Chatnachricht auf.
+1. Suchen Sie den Kommentar **Verwenden des Agents, um die Spesendaten zu verarbeiten**, und fügen Sie den folgenden Code hinzu, um einen Thread zu erstellen, in dem Ihr Agent ausgeführt werden soll, und rufen Sie ihn dann mit einer Chatnachricht auf.
 
-    (Achten Sie darauf, die Ebene des Einzugs beizubehalten):
+    (Achten Sie darauf, die Einzugsebene beizubehalten):
 
     ```python
-   # Use the agent to generate an expense claim email
+   # Use the agent to process the expenses data
    thread: AzureAIAgentThread = AzureAIAgentThread(client=project_client)
    try:
         # Add the input prompt to a list of messages to be submitted
-        prompt_messages = [f"Create an expense claim for the following expenses: {expenses_data}"]
+        prompt_messages = [f"{prompt}: {expenses_data}"]
         # Invoke the agent for the specified thread with the messages
         response = await expenses_agent.get_response(thread_id=thread.id, messages=prompt_messages)
         # Display the response
@@ -246,7 +224,8 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
         await project_client.agents.delete_agent(expenses_agent.id)
     ```
 
-1. Überprüfen Sie den fertigen Code für Ihren Agent und verwenden Sie die Kommentare, um zu verstehen, was die einzelnen Codeblöcke bewirken, und speichern Sie dann Ihre Codeänderungen (**STRG+S**).
+1. Überprüfen Sie, ob der abgeschlossene Code für Ihren Agent mithilfe der Kommentare verstehen kann, was jeder Codeblock bewirkt, und speichern Sie dann Die Codeänderungen (**STRG+S**).
+1. Lassen Sie den Code-Editor geöffnet, falls Sie die Eingabefehler im Code korrigieren müssen, aber ändern Sie die Größe der Bereiche, damit Sie mehr von der Befehlszeilenkonsole sehen können.
 
 ### Bei Azure anmelden und die App ausführen
 
@@ -267,11 +246,17 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
    python semantic-kernel.py
     ```
     
-    Die Anwendung wird mit den Anmeldeinformationen für Ihre authentifizierte Azure-Sitzung ausgeführt, um eine Verbindung zu Ihrem Projekt herzustellen und den Agent zu erstellen und auszuführen.
+    Die Anwendung wird mit den Anmeldeinformationen für Ihre authentifizierte Azure-Sitzung ausgeführt, um eine Verbindung mit Ihrem Projekt herzustellen und den Agent zu erstellen und auszuführen.
+
+1. Wenn Sie gefragt werden, was mit den Spesendaten zu tun ist, geben Sie den folgenden Prompt ein:
+
+    ```
+   Submit an expense claim
+    ```
+
+1. Überprüfe nach Abschluss der Anwendung die Ausgabe. Der Agent sollte eine E-Mail für eine Spesenabrechnung basierend auf den bereitgestellten Daten erstellt haben.
 
     > **Tipp**: Wenn die App fehlschlägt, weil das Ratenlimit überschritten wird. Warten Sie einige Sekunden, und versuchen Sie es noch mal. Wenn in Ihrem Abonnement nicht genügend Kontingent verfügbar ist, kann das Modell möglicherweise nicht reagieren.
-
-1. Überprüfen Sie nach Abschluss der Anwendung die Ausgabe. Der Agent hätte auf der Grundlage der übermittelten Daten eine E-Mail für einen Kostenerstattungsantrag verfassen müssen.
 
 ## Zusammenfassung
 
