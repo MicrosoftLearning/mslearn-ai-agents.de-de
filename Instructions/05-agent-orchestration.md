@@ -1,6 +1,6 @@
 ---
 lab:
-  title: Entwickeln einer Multi-Agent-Lösung
+  title: Entwickeln einer Multi-Agent-Lösung mit Semantischem Kernel
   description: 'Erfahren Sie, wie Sie mehrere Agents für die Zusammenarbeit mithilfe des semantischen Kernel-SDKs konfigurieren.'
 ---
 
