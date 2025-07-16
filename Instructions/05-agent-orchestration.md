@@ -1,6 +1,6 @@
 ---
 lab:
-  title: Entwickeln einer Multi-Agent-Lösung
+  title: Entwickeln einer Multi-Agent-Lösung mit Semantischem Kernel
   description: 'Erfahren Sie, wie Sie mehrere Agents für die Zusammenarbeit mithilfe des semantischen Kernel-SDKs konfigurieren.'
 ---
 
@@ -14,55 +14,42 @@ Diese Übung dauert ca. **30** Minuten.
 
 > **Hinweis**: Einige der in dieser Übung verwendeten Technologien befinden sich in der Vorschau oder in der aktiven Entwicklung. Es kann zu unerwartetem Verhalten, Warnungen oder Fehlern kommen.
 
-## Erstellen eines Azure KI Foundry-Projekts
+## Bereitstellen Sie ein DALL-E-Modell in einem Azure KI Foundry-Projekt
 
-Beginnen wir mit dem Erstellen eines Azure AI Foundry-Projekts.
+Beginnen wir mit dem Erstellen eines Azure KI Foundry-Projekts.
 
 1. Öffnen Sie in einem Webbrowser unter `https://ai.azure.com` das [Azure KI Foundry-Portal](https://ai.azure.com) und melden Sie sich mit Ihren Azure-Anmeldeinformationen an. Schließen Sie alle Tipps oder Schnellstartfenster, die bei der ersten Anmeldung geöffnet werden, und verwenden Sie gegebenenfalls das Logo **Azure AI Foundry** oben links, um zur Startseite zu navigieren, die ähnlich wie die folgende Abbildung aussieht (schließen Sie das **Hilfe**-Fenster, falls es geöffnet ist):
 
     ![Screenshot des Azure KI Foundry-Portals.](./Media/ai-foundry-home.png)
 
-1. Wählen Sie auf der Startseite **+ Projekt erstellen**.
-1. Geben Sie im Assistenten **Projekt erstellen** einen gültigen Namen für Ihr Projekt ein und wählen Sie, falls ein vorhandener Hub vorgeschlagen wird, die Option, einen neuen zu erstellen. Überprüfen Sie dann die Azure-Ressourcen, die automatisch erstellt werden, um Ihren Hub und Ihr Projekt zu unterstützen.
-1. Wählen Sie **Anpassen** aus und legen Sie die folgenden Einstellungen für Ihren Hub fest:
-    - **Hubname**: *Geben Sie einen gültigen Namen für Ihren Hub an*
+1. Suchen Sie auf der Startseite im Abschnitt **Modelle und Funktionen erkunden** nach dem Modell `gpt-4o`, das wir in unserem Projekt verwenden werden.
+1. Wählen Sie in den Suchergebnissen das Modell **gpt-4o** aus, um dessen Details anzuzeigen, und wählen Sie dann oben auf der Seite für das Modell die Option **Dieses Modell verwenden** aus.
+1. Wenn Sie zum Erstellen eines Projekts aufgefordert werden, geben Sie einen gültigen Namen für Ihr Projekt ein und erweitern Sie **Erweiterte Optionen**.
+1. Bestätigen Sie die folgenden Einstellungen für Ihr Projekt:
+    - **Azure KI Foundry-Ressource**: *Ein gültiger Name für Ihre Azure KI Foundry-Ressource*
     - **Abonnement:** *Geben Sie Ihr Azure-Abonnement an.*
     - **Ressourcengruppe**: *Erstellen Sie eine Ressourcengruppe, oder wählen Sie eine Ressourcengruppe aus*.
-    - **Standort:** Wählen Sie eine der folgenden Regionen aus:\*
-        - eastus
-        - eastus2
-        - swedencentral
-        - westus
-        - westus3
-    - A**zure KI Services oder Azure OpenAI verbinden**: *Wählen Sie Neuen KI-Dienst erstellen aus*
-    - **Azure KI-Suche verbinden**: Verbindung überspringen
+    - **Region**: *Wählen Sie einen beliebigen Standort aus, an dem KI Services unterstützt wird***\*
 
-    > \* Zum Zeitpunkt des Schreibens unterstützen diese Regionen das gpt-4o-Modell für die Nutzung in Agents. Die Modellverfügbarkeit wird durch regionale Kontingente eingeschränkt. Sollte im weiteren Verlauf der Übung eine Kontingentgrenze erreicht werden, besteht die Möglichkeit, dass Sie ein weiteres Projekt in einer anderen Region erstellen müssen.
+    > \* Einige Azure KI-Ressourcen unterliegen regionalen Modellkontingenten. Sollte im weiteren Verlauf der Übung eine Kontingentgrenze überschritten werden, müssen Sie möglicherweise eine weitere Ressource in einer anderen Region anlegen.
 
-1. Klicken Sie auf **Weiter**, um Ihre Konfiguration zu überprüfen. Klicken Sie auf **Erstellen** und warten Sie, bis der Vorgang abgeschlossen ist.
-1. Sobald Ihr Projekt erstellt wurde, schließen Sie alle angezeigten Tipps und überprüfen Sie die Projektseite im Azure AI Foundry-Portal, die in etwa wie in der folgenden Abbildung aussehen sollte:
+1. Wählen Sie **Erstellen** und warten Sie, bis Ihr Projekt einschließlich der von Ihnen ausgewählten GPT-4-Modellbereitstellung erstellt wurde.
+1. Wenn Ihr Projekt erstellt wird, wird der Chat-Playground automatisch geöffnet.
+
+    > **Hinweis**: Die Standard-TPM-Einstellung für dieses Modell ist möglicherweise für diese Übung zu niedrig. Ein niedrigerer TPM-Wert hilft dabei, eine Übernutzung des in Ihrem Abonnement verfügbaren Kontingents zu vermeiden. 
+
+1. Wählen Sie im Navigationsbereich links **Modelle und Endgeräte** und wählen Sie Ihre **gpt-4o**-Bereitstellung aus.
+
+1. Wählen Sie **Bearbeiten**, und erhöhen Sie die **Token pro Minute-Begrenzung**.
+
+   > **HINWEIS**: 40.000 TPM sollten für die in dieser Übung verwendeten Daten ausreichend sein. Wenn Ihr verfügbares Kontingent darunter liegt, können Sie die Übung zwar abschließen, müssen aber möglicherweise warten und die Prompts erneut senden, wenn das Kontingent überschritten wird.
+
+1. Notieren Sie sich im Bereich **Setup** den Namen Ihrer Modellbereitstellung, der **gpt-4o** lauten sollte. Sie können dies überprüfen, indem Sie die Bereitstellung auf der Seite **Modelle und Endpunkte** anzeigen (öffnen Sie dazu einfach diese Seite im Navigationsbereich auf der linken Seite).
+1. Wählen Sie im Navigationsbereich auf der linken Seite **Übersicht**, um die Hauptseite Ihres Projekts anzuzeigen, die wie folgt aussieht:
+
+    > **Hinweis**: Wenn die Fehlermeldung *Unzureichende Berechtigungen** angezeigt wird, klicken Sie auf die Schaltfläche „**Beheben**“, um das Problem zu beheben.
 
     ![Screenshot eines Azure KI-Projekts im Azure AI Foundry-Portal.](./Media/ai-foundry-project.png)
-
-## Bereitstellen eines generativen KI-Modells
-
-Jetzt sind Sie bereit, ein generatives KI-Sprachmodell zur Unterstützung Ihrer Agents einzusetzen.
-
-1. Wählen Sie im linken Fensterbereich für Ihr Projekt im Abschnitt **Meine Assets** die Seite **Modelle + Endpunkte**.
-1. Wählen Sie auf der Seite **Modelle + Endpunkte** auf der Registerkarte **Modellbereitstellungen** im Menü **+ Modell bereitstellen** die Option **Basismodell bereitstellen**.
-1. Suchen Sie das Modell **gpt-4o** in der Liste, wählen Sie es aus und bestätigen Sie es.
-1. Stellen Sie das Modell mit den folgenden Einstellungen bereit, indem Sie **Anpassen** in den Bereitstellungsdetails wählen:
-    - **Bereitstellungsname:***Ein eindeutiger Name für die Modellimplementierung*
-    - **Bereitstellungstyp**: Globaler Standard
-    - **Automatische Versionsaktualisierung**: Aktiviert
-    - **Modellversion**: *Wählen Sie die neueste verfügbare Version aus.*
-    - **Verbundene AI-Ressource**: *Wählen Sie Ihre Azure OpenAI-Ressourcenverbindung*
-    - **Tokens pro Minute Ratenlimit (Tausende)**: 60K *(oder das in Ihrem Abonnement verfügbare Maximum, wenn weniger als 60K)*
-    - **Inhaltsfilter**: StandardV2 
-
-    > **Hinweis:** Durch das Verringern des TPM wird die Überlastung des Kontingents vermieden, das in dem von Ihnen verwendeten Abonnement verfügbar ist. 60.000 TPM sollten für die in dieser Übung verwendeten Daten ausreichend sein. Wenn Ihr verfügbares Kontingent darunter liegt, können Sie die Übung zwar abschließen, müssen aber möglicherweise warten und die Prompts erneut senden, wenn das Kontingent überschritten wird.
-
-1. Warten Sie, bis die Bereitstellung abgeschlossen ist.
 
 ## Erstellen einer KI-Agent-Client-App
 
@@ -122,7 +109,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
 
     Die Datei wird in einem Code-Editor geöffnet.
 
-1. Ersetzen Sie in der Codedatei den Platzhalter **your_project_connection_string** mit der Verbindungszeichenfolge für Ihr Projekt (kopiert von der Projektseite **Übersicht** im Azure AI Foundry-Portal) und den Platzhalter **your_model_deployment** mit dem Namen, den Sie Ihrer gpt-4o-Modell-Bereitstellung zugewiesen haben.
+1. Ersetzen Sie in der Code-Datei den Platzhalter **your_project_endpoint** durch den Endpunkt für Ihr Projekt (kopiert von der Projektseite **Übersicht** im Azure AI Foundry-Portal) und den Platzhalter **your_model_deployment** durch den Namen, den Sie Ihrer gpt-4o-Modellbereitstellung zugewiesen haben.
 
 1. Nachdem Sie die Platzhalter ersetzt haben, verwenden Sie den Befehl **STRG+S**, um Ihre Änderungen zu speichern, und verwenden Sie dann den Befehl **STRG+Q**, um den Code-Editor zu schließen, während die Befehlszeile der Cloud Shell geöffnet bleibt.
 

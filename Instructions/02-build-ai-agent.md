@@ -20,47 +20,30 @@ Beginnen wir mit dem Erstellen eines Azure AI Foundry-Projekts.
 
     ![Screenshot des Azure KI Foundry-Portals.](./Media/ai-foundry-home.png)
 
-1. Wählen Sie auf der Startseite **+ Projekt erstellen**.
-1. Geben Sie im Assistenten **Projekt erstellen** einen gültigen Namen für Ihr Projekt ein und wählen Sie, falls ein vorhandener Hub vorgeschlagen wird, die Option, einen neuen zu erstellen. Überprüfen Sie dann die Azure-Ressourcen, die automatisch erstellt werden, um Ihren Hub und Ihr Projekt zu unterstützen.
-1. Wählen Sie **Anpassen** aus und legen Sie die folgenden Einstellungen für Ihren Hub fest:
-    - **Hubname**: *Geben Sie einen gültigen Namen für Ihren Hub an*
+1. Wählen Sie auf der Startseite **Agent erstellen**.
+1. Wenn Sie zur Erstellung eines Projekts aufgefordert werden, geben Sie einen gültigen Namen für Ihr Projekt ein und entfalten Sie die Option **Erweiterte Optionen**.
+1. Bestätigen Sie die folgenden Einstellungen für Ihr Projekt:
+    - **Azure KI Foundry-Ressource**: *Ein gültiger Name für Ihre Azure KI Foundry-Ressource*
     - **Abonnement:** *Geben Sie Ihr Azure-Abonnement an.*
     - **Ressourcengruppe**: *Erstellen Sie eine Ressourcengruppe, oder wählen Sie eine Ressourcengruppe aus*.
-    - **Standort:** Wählen Sie eine der folgenden Regionen aus:\*
-        - eastus
-        - eastus2
-        - swedencentral
-        - westus
-        - westus3
-    - A**zure KI Services oder Azure OpenAI verbinden**: *Wählen Sie Neuen KI-Dienst erstellen aus*
-    - **Azure KI-Suche verbinden**: Verbindung überspringen
+    - **Region**: *Wählen Sie einen beliebigen Standort aus, an dem KI Services unterstützt wird***\*
 
-    > \* Zum Zeitpunkt des Schreibens unterstützen diese Regionen das gpt-4o-Modell für die Nutzung in Agents. Die Modellverfügbarkeit wird durch regionale Kontingente eingeschränkt. Sollte im weiteren Verlauf der Übung eine Kontingentgrenze erreicht werden, besteht die Möglichkeit, dass Sie ein weiteres Projekt in einer anderen Region erstellen müssen.
+    > \* Einige Azure KI-Ressourcen unterliegen regionalen Modellkontingenten. Sollte im weiteren Verlauf der Übung eine Kontingentgrenze überschritten werden, müssen Sie möglicherweise eine weitere Ressource in einer anderen Region anlegen.
 
-1. Klicken Sie auf **Weiter**, um Ihre Konfiguration zu überprüfen. Klicken Sie auf **Erstellen** und warten Sie, bis der Vorgang abgeschlossen ist.
-1. Sobald Ihr Projekt erstellt wurde, schließen Sie alle angezeigten Tipps und überprüfen Sie die Projektseite im Azure AI Foundry-Portal, die in etwa wie in der folgenden Abbildung aussehen sollte:
+1. Klicken Sie auf **Erstellen**, und warten Sie, bis das Projekt erstellt wird.
+1. Nach dem Erstellen Ihres Projekts wird automatisch der Agenten-Playground geöffnet, sodass Sie ein Modell auswählen oder bereitstellen können:
 
-    ![Screenshot eines Azure KI-Projekts im Azure AI Foundry-Portal.](./Media/ai-foundry-project.png)
+    ![Screenshot eines Azure AI Foundry-Projekts „Agents Playground“.](./Media/ai-foundry-agents-playground.png)
 
-## Bereitstellen eines generativen KI-Modells
+    >**Hinweis**: Bei der Erstellung Ihres Agenten und Ihres Projekts wird automatisch ein GPT-4o-Basismodell bereitgestellt.
 
-Jetzt können Sie ein generatives KI-Sprachmodell bereitstellen, um Ihren Agent zu unterstützen.
+1. Wählen Sie im Navigationsbereich auf der linken Seite **Übersicht**, um die Hauptseite Ihres Projekts anzuzeigen, die wie folgt aussieht:
 
-1. Wählen Sie im linken Fensterbereich für Ihr Projekt im Abschnitt **Meine Assets** die Seite **Modelle + Endpunkte**.
-1. Wählen Sie auf der Seite **Modelle + Endpunkte** auf der Registerkarte **Modellbereitstellungen** im Menü **+ Modell bereitstellen** die Option **Basismodell bereitstellen**.
-1. Suchen Sie das Modell **gpt-4o** in der Liste, wählen Sie es aus und bestätigen Sie es.
-1. Stellen Sie das Modell mit den folgenden Einstellungen bereit, indem Sie **Anpassen** in den Bereitstellungsdetails wählen:
-    - **Bereitstellungsname:***Ein eindeutiger Name für die Modellimplementierung*
-    - **Bereitstellungstyp**: Globaler Standard
-    - **Automatische Versionsaktualisierung**: Aktiviert
-    - **Modellversion**: *Wählen Sie die neueste verfügbare Version aus.*
-    - **Verbundene AI-Ressource**: *Wählen Sie Ihre Azure OpenAI-Ressourcenverbindung*
-    - **Tokens pro Minute Ratenlimit (Tausende)**: 50K *(oder das in Ihrem Abonnement verfügbare Maximum, wenn weniger als 50K)*
-    - **Inhaltsfilter**: StandardV2 
+    > **Hinweis**: Wenn die Fehlermeldung *Unzureichende Berechtigungen** angezeigt wird, klicken Sie auf die Schaltfläche „**Beheben**“, um das Problem zu beheben.
 
-    > **Hinweis:** Durch das Verringern des TPM wird die Überlastung des Kontingents vermieden, das in dem von Ihnen verwendeten Abonnement verfügbar ist. 50.000 TPM sollten für die in dieser Übung verwendeten Daten ausreichend sein. Wenn Ihr verfügbares Kontingent darunter liegt, können Sie die Übung zwar abschließen, müssen aber möglicherweise warten und die Prompts erneut senden, wenn das Kontingent überschritten wird.
+    ![Screenshot einer Projektübersichtsseite von Azure AI Foundry.](./Media/ai-foundry-project.png)
 
-1. Warten Sie, bis die Bereitstellung abgeschlossen ist.
+1. Kopieren Sie die Werte für den **Endpunkt des Azure AI Foundry-Projekts** in einen Notizblock, da Sie diese für die Verbindung mit Ihrem Projekt in einer Clientanwendung benötigen.
 
 ## Erstellen einer Agent-Client-App 
 
@@ -107,7 +90,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent verwendet. Ein Teil
     ```
    python -m venv labenv
    ./labenv/bin/Activate.ps1
-   pip install python-dotenv azure-identity azure-ai-projects
+   pip install -r requirements.txt azure-ai-projects
     ```
 
 1. Geben Sie den folgenden Befehl ein, um die bereitgestellte Konfigurationsdatei zu bearbeiten:
@@ -118,8 +101,8 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent verwendet. Ein Teil
 
     Die Datei wird in einem Code-Editor geöffnet.
 
-1. Ersetzen Sie in der Codedatei den Platzhalter **your_project_connection_string** mit der Verbindungszeichenfolge für Ihr Projekt (kopiert von der Projektseite **Übersicht** im Azure AI Foundry-Portal) und den Platzhalter **your_model_deployment** mit dem Namen, den Sie Ihrer gpt-4o-Modell-Bereitstellung zugewiesen haben.
-1. Nachdem Sie die Platzhalter ersetzt haben, verwenden Sie den Befehl **STRG+S**, um Ihre Änderungen zu speichern, und verwenden Sie dann den Befehl **STRG+Q**, um den Code-Editor zu schließen, während die Befehlszeile der Cloud Shell geöffnet bleibt.
+1. Ersetzen Sie in der Code-Datei den Platzhalter **your_project_endpoint** durch den Endpunkt für Ihr Projekt (kopiert von der Projektseite **Übersicht** im Azure AI Foundry-Portal).
+1. Nachdem Sie den Platzhalter ersetzt haben, speichern Sie Ihre Änderungen mit dem Befehl **STRG+S** und schließen Sie den Code-Editor mit dem Befehl **STRG+Q**, wobei die Cloud Shell-Befehlszeile geöffnet bleibt.
 
 ### Schreiben von Code für eine Agent-App.
 
@@ -137,32 +120,32 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent verwendet. Ein Teil
     ```python
    # Add references
    from azure.identity import DefaultAzureCredential
-   from azure.ai.projects import AIProjectClient
-   from azure.ai.projects.models import FilePurpose, CodeInterpreterTool
+   from azure.ai.agents import AgentsClient
+   from azure.ai.agents.models import FilePurpose, CodeInterpreterTool, ListSortOrder, MessageRole
     ```
 
-1. Suchen Sie den Kommentar **Connect to the Azure AI Foundry project** und fügen Sie den folgenden Code hinzu, um eine Verbindung zum Azure KI-Projekt herzustellen.
+1. Suchen Sie den Kommentar **Mit dem Agent-Client verbinden** und fügen Sie den folgenden Code hinzu, um eine Verbindung zum Azure KI-Projekt herzustellen.
 
     > **Tipp**: Achten Sie darauf, die richtige Einzugsebene beizubehalten.
 
     ```python
-   # Connect to the Azure AI Foundry project
-   project_client = AIProjectClient.from_connection_string(
-        credential=DefaultAzureCredential
-            (exclude_environment_credential=True,
-             exclude_managed_identity_credential=True),
-        conn_str=PROJECT_CONNECTION_STRING
+   # Connect to the Agent client
+   agent_client = AgentsClient(
+       endpoint=project_endpoint,
+       credential=DefaultAzureCredential
+           (exclude_environment_credential=True,
+            exclude_managed_identity_credential=True)
    )
-   with project_client:
+   with agent_client:
     ```
 
-    Der Code stellt mithilfe der aktuellen Azure-Anmeldeinformationen eine Verbindung mit dem Azure AI Foundry-Projekt her. Die abschließende Anweisung *with project_client* startet einen Codeblock, der den Geltungsbereich des Clients definiert und sicherstellt, dass dieser bereinigt wird, wenn der Code innerhalb des Blocks beendet ist.
+    Der Code stellt mithilfe der aktuellen Azure-Anmeldeinformationen eine Verbindung mit dem Azure AI Foundry-Projekt her. Die abschließende Anweisung *mit agent_client* startet einen Codeblock, der den Geltungsbereich des Clients definiert und sicherstellt, dass dieser bereinigt wird, wenn der Code innerhalb des Blocks beendet ist.
 
-1. Suchen Sie den Kommentar **Upload the data file and create a CodeInterpreterTool** innerhalb des Blocks *with project_client* und fügen Sie den folgenden Code hinzu, um die Datendatei in das Projekt hochzuladen und ein CodeInterpreterTool zu erstellen, das auf die darin enthaltenen Daten zugreifen kann:
+1. Suchen Sie den Kommentar **Laden Sie die Datendatei hoch und erstellen Sie ein CodeInterpreterTool** innerhalb des Blocks *mit agent_client* und fügen Sie den folgenden Code hinzu, um die Datendatei in das Projekt hochzuladen und ein CodeInterpreterTool zu erstellen, das auf die darin enthaltenen Daten zugreifen kann:
 
     ```python
    # Upload the data file and create a CodeInterpreterTool
-   file = project_client.agents.upload_file_and_poll(
+   file = agent_client.files.upload_and_poll(
         file_path=file_path, purpose=FilePurpose.AGENTS
    )
    print(f"Uploaded {file.filename}")
@@ -174,8 +157,8 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent verwendet. Ein Teil
 
     ```python
    # Define an agent that uses the CodeInterpreterTool
-   agent = project_client.agents.create_agent(
-        model=MODEL_DEPLOYMENT,
+   agent = agent_client.create_agent(
+        model=model_deployment,
         name="data-agent",
         instructions="You are an AI agent that analyzes the data in the file that has been uploaded. If the user requests a chart, create it and save it as a .png file.",
         tools=code_interpreter.definitions,
@@ -188,7 +171,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent verwendet. Ein Teil
 
     ```python
    # Create a thread for the conversation
-   thread = project_client.agents.create_thread()
+   thread = agent_client.threads.create()
     ```
     
 1. Beachten Sie, dass im nächsten Abschnitt des Codes eine Schleife eingerichtet wird, in der die benutzende Person einen Prompt eingibt, der beendet wird, wenn die Person „quit“ eingibt.
@@ -197,16 +180,16 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent verwendet. Ein Teil
 
     ```python
    # Send a prompt to the agent
-   message = project_client.agents.create_message(
+   message = agent_client.messages.create(
         thread_id=thread.id,
         role="user",
         content=user_prompt,
     )
 
-    run = project_client.agents.create_and_process_run(thread_id=thread.id, agent_id=agent.id)
-     ```
+   run = agent_client.runs.create_and_process(thread_id=thread.id, agent_id=agent.id)
+    ```
 
-1. Suchen Sie den Kommentar **Prüfen Sie den Ausführungsstatus auf Fehler** und fügen Sie den folgenden Code ein, um alle auftretenden Fehler anzuzeigen.
+1. Suchen Sie den Kommentar **Ausführungsstatus auf Fehler prüfen** und fügen Sie den folgenden Code hinzu, um auf Fehler zu prüfen.
 
     ```python
    # Check the run status for failures
@@ -218,10 +201,12 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent verwendet. Ein Teil
 
     ```python
    # Show the latest response from the agent
-   messages = project_client.agents.list_messages(thread_id=thread.id)
-   last_msg = messages.get_last_text_message_by_role("assistant")
+   last_msg = agent_client.messages.get_last_message_text_by_role(
+       thread_id=thread.id,
+       role=MessageRole.AGENT,
+   )
    if last_msg:
-        print(f"Last Message: {last_msg.text.value}")
+       print(f"Last Message: {last_msg.text.value}")
     ```
 
 1. Suchen Sie den Kommentar **Get the conversation history**, der sich nach dem Ende der Schleife befindet, und fügen Sie den folgenden Code ein, um die Nachrichten aus dem Unterhaltungsthread auszudrucken; kehren Sie die Reihenfolge um, um sie in chronologischer Reihenfolge anzuzeigen
@@ -229,27 +214,31 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent verwendet. Ein Teil
     ```python
    # Get the conversation history
    print("\nConversation Log:\n")
-   messages = project_client.agents.list_messages(thread_id=thread.id)
-   for message_data in reversed(messages.data):
-        last_message_content = message_data.content[-1]
-        print(f"{message_data.role}: {last_message_content.text.value}\n")
+   messages = agent_client.messages.list(thread_id=thread.id, order=ListSortOrder.ASCENDING)
+   for message in messages:
+       if message.text_messages:
+           last_msg = message.text_messages[-1]
+           print(f"{message.role}: {last_msg.text.value}\n")
     ```
 
-1. Suchen Sie den Kommentar **Abrufen aller erzeugten Dateien** und fügen Sie den folgenden Code hinzu, um alle Dateipfad-Anmerkungen aus den Nachrichten zu erhalten (die anzeigen, dass der Agent eine Datei in seinem internen Speicher gespeichert hat) und die Dateien in den Anwendungsordner zu kopieren.
+1. Suchen Sie den Kommentar **Abrufen aller erzeugten Dateien** und fügen Sie den folgenden Code hinzu, um alle Dateipfad-Anmerkungen aus den Nachrichten zu erhalten (die anzeigen, dass der Agent eine Datei in seinem internen Speicher gespeichert hat) und die Dateien in den Anwendungsordner zu kopieren. _HINWEIS_: Derzeit sind die Bildinhalte vom System nicht verfügbar.
 
     ```python
    # Get any generated files
-   for file_path_annotation in messages.file_path_annotations:
-        project_client.agents.save_file(file_id=file_path_annotation.file_path.file_id, file_name=Path(file_path_annotation.text).name)
-        print(f"File saved as {Path(file_path_annotation.text).name}")
+   for msg in messages:
+       # Save every image file in the message
+       for img in msg.image_contents:
+           file_id = img.image_file.file_id
+           file_name = f"{file_id}_image_file.png"
+           agent_client.files.save(file_id=file_id, file_name=file_name)
+           print(f"Saved image file to: {Path.cwd() / file_name}")
     ```
 
 1. Suchen Sie den Kommentar **Aufräumen** und fügen Sie den folgenden Code ein, um den Agent und den Thread zu löschen, wenn er nicht mehr benötigt wird.
 
     ```python
    # Clean up
-   project_client.agents.delete_agent(agent.id)
-   project_client.agents.delete_thread(thread.id)
+   agent_client.delete_agent(agent.id)
     ```
 
 1. Überprüfen Sie den Code mithilfe der Kommentare, um zu verstehen, wie er:
