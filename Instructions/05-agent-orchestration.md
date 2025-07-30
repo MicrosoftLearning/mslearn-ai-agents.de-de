@@ -10,6 +10,8 @@ In dieser Übung erstellen Sie ein Projekt, das zwei KI-Agents mithilfe des Sema
 
 Für diese Übung werden vier Stichproben-Protokolldateien bereitgestellt. Der Agent-Code des DevOps Assistant aktualisiert die Beispielprotokolldateien nur mit einigen Beispielprotokollmeldungen.
 
+> **Tipp**: Der in dieser Übung verwendete Code basiert auf dem Semantic Kernel SDK für Python. Sie können ähnliche Lösungen mithilfe der SDKs für Microsoft .NET und Java entwickeln. Ausführliche Informationen finden Sie unter [Unterstützte Sprachen für semantische Kernel](https://learn.microsoft.com/semantic-kernel/get-started/supported-languages).
+
 Diese Übung dauert ca. **30** Minuten.
 
 > **Hinweis**: Einige der in dieser Übung verwendeten Technologien befinden sich in der Vorschau oder in der aktiven Entwicklung. Es kann zu unerwartetem Verhalten, Warnungen oder Fehlern kommen.
@@ -46,8 +48,6 @@ Beginnen wir mit dem Erstellen eines Azure KI Foundry-Projekts.
 
 1. Notieren Sie sich im Bereich **Setup** den Namen Ihrer Modellbereitstellung, der **gpt-4o** lauten sollte. Sie können dies überprüfen, indem Sie die Bereitstellung auf der Seite **Modelle und Endpunkte** anzeigen (öffnen Sie dazu einfach diese Seite im Navigationsbereich auf der linken Seite).
 1. Wählen Sie im Navigationsbereich auf der linken Seite **Übersicht**, um die Hauptseite Ihres Projekts anzuzeigen, die wie folgt aussieht:
-
-    > **Hinweis**: Wenn die Fehlermeldung *Unzureichende Berechtigungen** angezeigt wird, klicken Sie auf die Schaltfläche „**Beheben**“, um das Problem zu beheben.
 
     ![Screenshot eines Azure KI-Projekts im Azure AI Foundry-Portal.](./Media/ai-foundry-project.png)
 
@@ -96,10 +96,10 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
     ```
    python -m venv labenv
    ./labenv/bin/Activate.ps1
-   pip install python-dotenv azure-identity semantic-kernel[azure] 
+   pip install python-dotenv azure-identity semantic-kernel --upgrade
     ```
 
-    > **Hinweis**: Die Installation von *semantic-kernel[azure]* installiert automatisch eine zum semantischen Kernel kompatible Version von *azure-ai-projects*.
+    > **Hinweis:** Durch die Installation von *semantic-kernel* wird automatisch eine mit dem semantischen Kernel kompatible Version von *azure-ai-projects* installiert.
 
 1. Geben Sie den folgenden Befehl ein, um die mitgelieferte Konfigurationsdatei zu bearbeiten:
 
