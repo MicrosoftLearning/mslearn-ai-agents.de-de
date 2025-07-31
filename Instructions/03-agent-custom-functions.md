@@ -6,9 +6,9 @@ lab:
 
 # Verwenden einer benutzerdefinierten Funktion in einem KI-Agent
 
-In dieser Übung erfahren Sie, wie Sie einen Agent erstellen, der benutzerdefinierte Funktionen als Tool zum Ausführen von Aufgaben verwenden kann.
+In dieser Übung erfahren Sie, wie Sie einen Agent erstellen, der benutzerdefinierte Funktionen als Tool zum Ausführen von Aufgaben verwenden kann. Sie erstellen einen einfachen technischen Support Agent, der Details zu einem technischen Problem sammeln und ein Supportticket generieren kann.
 
-Sie erstellen einen einfachen technischen Support Agent, der Details zu einem technischen Problem sammeln und ein Supportticket generieren kann.
+> **Tipp**: Der in dieser Übung verwendete Code basiert auf dem Azure AI Foundry SDK für Python. Sie können ähnliche Lösungen mithilfe der SDKs für Microsoft .NET, JavaScript und Java entwickeln. Ausführliche Informationen finden Sie unter [Azure AI Foundry SDK-Clientbibliotheken](https://learn.microsoft.com/azure/ai-foundry/how-to/develop/sdk-overview).
 
 Diese Übung dauert ca. **30** Minuten.
 
@@ -33,19 +33,17 @@ Beginnen wir mit dem Erstellen eines Azure AI Foundry-Projekts.
     > \* Einige Azure KI-Ressourcen unterliegen regionalen Modellkontingenten. Sollte im weiteren Verlauf der Übung eine Kontingentgrenze überschritten werden, müssen Sie möglicherweise eine weitere Ressource in einer anderen Region anlegen.
 
 1. Klicken Sie auf **Erstellen**, und warten Sie, bis das Projekt erstellt wird.
-1. Nach dem Erstellen Ihres Projekts wird automatisch der Agenten-Playground geöffnet, sodass Sie ein Modell auswählen oder bereitstellen können:
+1. Wenn Sie dazu aufgefordert werden, stellen Sie ein **gpt-4o**-Modell entweder mithilfe der Bereitstellungsoption *Globaler Standard* oder *Standard* bereit (je nach Kontingentverfügbarkeit).
 
-    ![Screenshot eines Azure AI Foundry-Projekts „Agents Playground“.](./Media/ai-foundry-agents-playground.png)
+    >**Hinweis:** Wenn ein Kontingent verfügbar ist, kann ein GPT-4o-Basismodell automatisch bereitgestellt werden, wenn Sie Ihren Agent und Ihr Projekt erstellen.
 
-    >**Hinweis**: Bei der Erstellung Ihres Agenten und Ihres Projekts wird automatisch ein GPT-4o-Basismodell bereitgestellt.
+1. Wenn Ihr Projekt erstellt wird, wird der Agents-Playground geöffnet.
 
 1. Wählen Sie im Navigationsbereich auf der linken Seite **Übersicht**, um die Hauptseite Ihres Projekts anzuzeigen, die wie folgt aussieht:
 
-    > **Hinweis**: Wenn die Fehlermeldung *Unzureichende Berechtigungen** angezeigt wird, klicken Sie auf die Schaltfläche „**Beheben**“, um das Problem zu beheben.
-
     ![Screenshot einer Projektübersichtsseite von Azure AI Foundry.](./Media/ai-foundry-project.png)
 
-1. Kopieren Sie den Wert **Azure AI Foundry-Projekt-Endgerät** in einen Notizblock, da Sie ihn für die Verbindung mit Ihrem Projekt in einer Clientanwendung benötigen.
+1. Kopieren Sie die Werte für den **Endpunkt des Azure AI Foundry-Projekts** in einen Notizblock, da Sie diese für die Verbindung mit Ihrem Projekt in einer Clientanwendung benötigen.
 
 ## Entwickeln eines Agents, der Funktionstools verwendet
 
@@ -105,7 +103,7 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
 
     Die Datei wird in einem Code-Editor geöffnet.
 
-1. Ersetzen Sie in der Code-Datei den Platzhalter **your_project_endpoint** durch den Endpunkt für Ihr Projekt (kopiert von der Projektseite **Übersicht** im Azure AI Foundry-Portal).
+1. Ersetzen Sie in der Codedatei den Platzhalter **your_project_endpoint** durch den Endpunkt für Ihr Projekt (kopiert aus der Projektseite **Übersicht** im Azure AI Foundry-Portal), und stellen Sie sicher, dass die Variable MODEL_DEPLOYMENT_NAME auf den Namen Ihrer Modellbereitstellung festgelegt ist (dies sollte *gpt-4o* sein).
 1. Nachdem Sie den Platzhalter ersetzt haben, speichern Sie Ihre Änderungen mit dem Befehl **STRG+S** und schließen Sie den Code-Editor mit dem Befehl **STRG+Q**, wobei die Cloud Shell-Befehlszeile geöffnet bleibt.
 
 ### Definieren einer benutzerdefinierten Funktion
@@ -245,7 +243,7 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
    print("\nConversation Log:\n")
    messages = agent_client.messages.list(thread_id=thread.id, order=ListSortOrder.ASCENDING)
    for message in messages:
-       if message.text_messages:
+        if message.text_messages:
            last_msg = message.text_messages[-1]
            print(f"{message.role}: {last_msg.text.value}\n")
     ```

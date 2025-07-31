@@ -31,6 +31,10 @@ Beginnen wir mit dem Erstellen eines Azure AI Foundry-Projekts.
     > \* Einige Azure KI-Ressourcen unterliegen regionalen Modellkontingenten. Sollte im weiteren Verlauf der Übung eine Kontingentgrenze überschritten werden, müssen Sie möglicherweise eine weitere Ressource in einer anderen Region anlegen.
 
 1. Klicken Sie auf **Erstellen**, und warten Sie, bis das Projekt erstellt wird.
+1. Stellen Sie bei entsprechender Aufforderung ein **gpt-4o**-Modell mithilfe des Bereitstellungstyps **Globaler Standard** oder **Standard** (je nach Kontingentverfügbarkeit) bereit, und passen Sie die Bereitstellungsdetails an, um für **Ratenbegrenzung für Token pro Minute** den Wert „50.000“ (oder den maximal verfügbaren Wert, wenn er weniger als 50.000 beträgt) festzulegen.
+
+    > **Hinweis:** Durch das Verringern des TPM wird die Überlastung des Kontingents vermieden, das in dem von Ihnen verwendeten Abonnement verfügbar ist. 50.000 TPM sollten für die in dieser Übung verwendeten Daten ausreichend sein. Wenn Ihr verfügbares Kontingent darunter liegt, können Sie die Übung zwar durchführen, aber es können Fehler auftreten, wenn das Kontingent überschritten wird.
+
 1. Nach dem Erstellen Ihres Projekts wird automatisch der Agenten-Playground geöffnet, sodass Sie ein Modell auswählen oder bereitstellen können:
 
     ![Screenshot eines Azure AI Foundry-Projekts „Agents Playground“.](./Media/ai-foundry-agents-playground.png)
