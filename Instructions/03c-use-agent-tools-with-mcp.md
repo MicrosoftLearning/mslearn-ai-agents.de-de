@@ -6,9 +6,9 @@ lab:
 
 # Verbinden von KI-Agents mit Tools mithilfe des MCP (Model Context Protocol)
 
-In dieser Übung erstellen Sie einen Agent, der eine Verbindung mit einem in der Cloud gehosteten MCP-Server herstellt. Der Agent verwendet eine KI-gestützte Suche, um Programmierenden zu helfen, in Echtzeit genaue Antworten aus der offiziellen Dokumentation von Microsoft zu finden. Dies ist hilfreich beim Erstellen von Assistenten, die Programmierende mit aktuellen Anleitungen zu Tools wie Azure, .NET und Microsoft 365 unterstützen. Der Agent verwendet das bereitgestellte Tool `microsoft_docs_search`, um die Dokumentation abzufragen und relevante Ergebnisse zurückzugeben.
+In dieser Übung erstellen Sie einen Agent, der eine Verbindung mit einem in der Cloud gehosteten MCP-Server herstellt. Der Agent verwendet eine KI-gestützte Suche, um Programmierenden zu helfen, in Echtzeit genaue Antworten aus der offiziellen Dokumentation von Microsoft zu suchen. Das ist beim Erstellen von Assistenten hilfreich, die Programmierende mit aktuellen Anleitungen zu Tools wie Azure, .NET und Microsoft 365 unterstützen. Der Agent verwendet das bereitgestellte Tool `microsoft_docs_search`, um die Dokumentation abzufragen und relevante Ergebnisse zurückzugeben.
 
-> **Tipp**: Der in dieser Übung verwendete Code basiert auf dem MCP-Beispielsupportrepository für den Azure AI Agent Service. Weitere Informationen finden Sie in den [Azure OpenAI-Demos](https://github.com/retkowsky/Azure-OpenAI-demos/blob/main/Azure%20Agent%20Service/9%20Azure%20AI%20Agent%20service%20-%20MCP%20support.ipynb) oder unter [Herstellen einer Verbindung mit Model Context Protocol-Servern](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/model-context-protocol).
+> **Tipp**: Der in dieser Übung verwendete Code basiert auf dem MCP-Supportbeispielrepository für Azure KI-Agent-Dienst. Weitere Informationen finden Sie in [Azure OpenAI-Demos](https://github.com/retkowsky/Azure-OpenAI-demos/blob/main/Azure%20Agent%20Service/9%20Azure%20AI%20Agent%20service%20-%20MCP%20support.ipynb) oder unter [Herstellen einer Verbindung mit Model Context Protocol-Servern](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/model-context-protocol).
 
 Diese Übung dauert ca. **30** Minuten.
 
@@ -131,7 +131,7 @@ In dieser Aufgabe stellen Sie eine Verbindung mit einem MCP-Remoteserver her, be
    )
     ```
 
-1. Fügen Sie unter dem Kommentar **MCP-Agent-Tool initialisieren** den folgenden Code hinzu:
+1. Fügen Sie unter dem Kommentar **Initialize agent MCP tool** den folgenden Code hinzu:
 
     ```python
    # Initialize agent MCP tool
@@ -141,9 +141,9 @@ In dieser Aufgabe stellen Sie eine Verbindung mit einem MCP-Remoteserver her, be
    )
     ```
 
-    Dieser Code stellt eine Verbindung mit dem MCP-Remoteserver der Microsft Learn Dokumentation her. Dies ist ein in der Cloud gehosteter Dienst, mit dem Clients direkt auf vertrauenswürdige und aktuelle Informationen in der offiziellen Microsoft-Dokumentation zugreifen können.
+    Dieser Code stellt eine Verbindung mit dem MCP-Remoteserver der Microsft Learn-Dokumentation her. Dabei handelt es sich um eine in der Cloud gehosteten Dienst, mit dem Clients direkt auf vertrauenswürdige und aktuelle Informationen in der offiziellen Microsoft-Dokumentation zugreifen können.
 
-1. Fügen Sie unter dem Kommentar **Neuen Agent mit den MCP-Tooldefinitionen erstellen** den folgenden Code hinzu:
+1. Fügen Sie unter dem Kommentar **Create a new agent with the mcp tool definitions** den folgenden Code hinzu:
 
     ```python
    # Create a new agent with the mcp tool definitions
@@ -160,7 +160,7 @@ In dieser Aufgabe stellen Sie eine Verbindung mit einem MCP-Remoteserver her, be
 
     In diesem Code geben Sie Anweisungen für den Agent und stellen ihm die MCO-Tooldefinitionen zur Verfügung.
 
-1. Suchen Sie den Kommentar **Kommunikationsthread erstellen**, und fügen Sie den folgenden Code hinzu:
+1. Suchen Sie den Kommentar **Create thread for communication**, und fügen Sie den folgenden Code hinzu:
 
     ```python
    # Create thread for communication
@@ -168,7 +168,7 @@ In dieser Aufgabe stellen Sie eine Verbindung mit einem MCP-Remoteserver her, be
    print(f"Created thread, ID: {thread.id}")
     ```
 
-1. Suchen Sie den Kommentar **Nachricht im Thread erstellen**, und fügen Sie den folgenden Code hinzu:
+1. Suchen Sie den Kommentar, **Create a message on the thread**, und fügen Sie den folgenden Code hinzu:
 
     ```python
    # Create a message on the thread
@@ -180,21 +180,21 @@ In dieser Aufgabe stellen Sie eine Verbindung mit einem MCP-Remoteserver her, be
    print(f"Created message, ID: {message.id}")
     ```
 
-1. Fügen Sie unter dem Kommentar **MCP-Toolheader aktualisieren** den folgenden Code hinzu:
+1. Fügen Sie unter dem Kommentar **Update mcp tool headers** den folgenden Code hinzu:
 
     ```python
    # Update mcp tool headers
    mcp_tool.update_headers("SuperSecret", "123456")
     ```
 
-1. Suchen Sie den Kommentar **Genehmigungsmodus festlegen**, und fügen Sie den folgenden Code hinzu:
+1. Suchen Sie den Kommentar **Set approval mode**, und fügen Sie den folgenden Code hinzu:
 
     ```python
    # Set approval mode
    mcp_tool.set_approval_mode("never")
     ```
 
-1. Suchen Sie den Kommentar **Agent-Ausführung im Thread mit MCP-Tools erstellen verarbeiten**, und fügen Sie den folgenden Code hinzu:
+1. Suchen Sie den Kommentar **Create and process agent run in thread with MCP tools**, und fügen Sie den folgenden Code hinzu:
 
     ```python
    # Create and process agent run in thread with MCP tools
@@ -202,7 +202,7 @@ In dieser Aufgabe stellen Sie eine Verbindung mit einem MCP-Remoteserver her, be
    print(f"Created run, ID: {run.id}")
     ```
     
-    Der KI-Agent ruft automatisch die verbundenen MCP-Tools auf, um die Promptanforderung zu verarbeiten. Zur Veranschaulichung dieses Prozesses gibt der Code unter dem Kommentar **Ausführungsschritte und Toolaufrufe anzeigen** alle über den MCP-Server aufgerufenen Tools aus.
+    Der KI-Agent ruft automatisch die verbundenen MCP-Tools auf, um die Promptanforderung zu verarbeiten. Zur Veranschaulichung dieses Prozesses gibt der Code unter dem Kommentar **Display run steps and tool calls** alle über den MCP-Server aufgerufenen Tools aus.
 
 1. Speichern Sie die Codedatei (*STRG+S*), wenn Sie fertig sind. Sie können auch den Code-Editor (*STRG+Q*) schließen. Möglicherweise möchten Sie ihn jedoch geöffnet lassen, falls Sie Änderungen an dem Code vornehmen müssen, den Sie hinzugefügt haben. Lassen Sie in beiden Fällen den Befehlszeilenbereich der Cloud Shell geöffnet.
 
@@ -257,9 +257,9 @@ In dieser Aufgabe stellen Sie eine Verbindung mit einem MCP-Remoteserver her, be
 
     {{continued...}}
 
-    Mithilfe dieser Schritte können Sie eine Azure Container Apps-Instanz entweder mit systemseitig zugewiesenen oder benutzerseitig zugewiesenen verwalteten Identitäten bereitstellen, um eine nahtlose mit anderen Azure-Diensten durchzuführen.
+    Mithilfe dieser Schritte können Sie eine Azure Container Apps-Instanz entweder systemseitig oder benutzerseitig zugewiesenen verwalteten Identitäten bereitstellen, um eine nahtlose Integration mit weiteren Azure-Diensten durchzuführen.
     --------------------------------------------------
-    BENUTZER: Nenne mir die Azure CLI Befehle zum Erstellen einer Azure Container Apps-Instanz mit einer verwalteten Identität.
+    USER: Nenne mir die Azure CLI Befehle zum Erstellen einer Azure Container Apps-Instanz mit einer verwalteten Identität.
     --------------------------------------------------
     Gelöschter Agent
     ```
