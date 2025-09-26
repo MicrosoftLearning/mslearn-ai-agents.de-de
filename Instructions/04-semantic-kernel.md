@@ -29,7 +29,7 @@ Beginnen wir mit dem Erstellen eines Azure KI Foundry-Projekts.
     - **Azure KI Foundry-Ressource**: *Ein gültiger Name für Ihre Azure KI Foundry-Ressource*
     - **Abonnement:** *Geben Sie Ihr Azure-Abonnement an.*
     - **Ressourcengruppe**: *Erstellen Sie eine Ressourcengruppe, oder wählen Sie eine Ressourcengruppe aus*.
-    - **Region**: *Wählen Sie einen beliebigen Standort aus, an dem KI Services unterstützt wird***\*
+    - **Region**: Wählen Sie die **empfohlene AI Foundry-Instanz aus***\*
 
     > \* Einige Azure KI-Ressourcen unterliegen regionalen Modellkontingenten. Sollte im weiteren Verlauf der Übung eine Kontingentgrenze überschritten werden, müssen Sie möglicherweise eine weitere Ressource in einer anderen Region anlegen.
 
@@ -147,7 +147,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
 
     > **Hinweis**: Die Funktion *simuliert* das Senden einer E-Mail durch Drucken an die Konsole. In einer echten Anwendung verwenden Sie einen SMTP-Dienst oder ähnliches, um die E-Mail tatsächlich zu senden!
 
-1. Sichern Sie oben den neuen **EmailPlugin**-Klassencode in der Funktion **create_expense_claim**, suchen Sie den Kommentar **Konfigurationseinstellungen abrufen**, und fügen Sie den folgenden Code hinzu, um die Konfigurationsdatei zu laden und ein Objekt **AzureAIAgentSettings** zu erstellen (das automatisch die Azure KI Agent-Einstellungen aus der Konfiguration enthält).
+1. Sichern Sie oben den neuen **EmailPlugin**-Klassencode in der Funktion **process_expenses_data**, suchen Sie den Kommentar **Get configuration settings**, und fügen Sie den folgenden Code hinzu, um die Konfigurationsdatei zu laden und ein Objekt **AzureAIAgentSettings** zu erstellen (das automatisch die Azure KI Agent-Einstellungen aus der Konfiguration enthält).
 
     (Achten Sie darauf, die Ebene des Einzugs beizubehalten)
 
