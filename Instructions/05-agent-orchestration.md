@@ -141,6 +141,8 @@ Jetzt können Sie die Agents für Ihre Multi-Agent-Lösung erstellen! Legen wir 
    ):
     ```
 
+    Beachten Sie, dass das **AzureCliCredential**-Objekt Ihrem Code die Authentifizierung bei Ihrem Azure-Konto ermöglicht. Das **AzureAIAgentClient**-Objekt enthält automatisch die Azure AI Foundry-Projekteinstellungen aus der ENV-Konfiguration.
+
 1. Fügen Sie den folgenden Code unter dem Kommentar **Create agents** hinzu:
 
     (Achten Sie darauf, die Ebene des Einzugs beizubehalten)
