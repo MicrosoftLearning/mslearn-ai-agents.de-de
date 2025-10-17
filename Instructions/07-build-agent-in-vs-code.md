@@ -68,7 +68,7 @@ Sie benötigen ein bereitgestelltes Modell, das mit Ihrem Agent verwendet wird.
 
 1. Suchen Sie im Modellkatalog nach dem Modell **gpt-4o** (Sie können die Suchleiste verwenden, um es schnell zu finden).
 
-    ![Screenshot des Modellkatalogs in der VS Code-Erweiterung von Azure AI Foundry.](media/vs-code-model.png)
+    ![Screenshot des Modellkatalogs in der VS Code-Erweiterung von Azure AI Foundry.](Media/vs-code-model.png)
 
 1. Wählen Sie **In Azure bereitstellen** neben dem gpt-4o-Modell aus.
 
@@ -92,7 +92,7 @@ Jetzt erstellen Sie einen KI-Agent mithilfe der Oberfläche des Visual Designers
 
 1. Wählen Sie das Symbol **+** (Plus) neben dem Unterabschnitt **Agents** aus, um einen neuen KI-Agent zu erstellen.
 
-    ![Screenshot eines Agents in der VS Code-Erweiterung von Azure AI Foundry.](media/vs-code-new-agent.png)
+    ![Screenshot eines Agents in der VS Code-Erweiterung von Azure AI Foundry.](Media/vs-code-new-agent.png)
 
 1. Wählen Sie einen Speicherort für Ihre Agentdateien aus, wenn Sie dazu aufgefordert werden.
 
@@ -117,7 +117,7 @@ Sie fügen nun ein MCP-Servertool (Model Context Protocol) hinzu, mit dem Ihr Ag
 
 1. Wählen Sie im Abschnitt **TOOL** des Designers die Schaltfläche **Tool hinzufügen** in der oberen rechten Ecke aus.
 
-![Screenshot des Hinzufügens eines Tools zu einem Agent in der VS Code-Erweiterung von Azure AI Foundry.](media/vs-code-agent-tools.png)
+![Screenshot des Hinzufügens eines Tools zu einem Agent in der VS Code-Erweiterung von Azure AI Foundry.](Media/vs-code-agent-tools.png)
 
 1. Wählen Sie im Dropdownmenü **MCP-Server** aus.
 
