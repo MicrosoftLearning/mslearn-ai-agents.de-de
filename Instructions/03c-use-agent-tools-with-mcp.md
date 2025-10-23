@@ -199,6 +199,15 @@ In dieser Aufgabe stellen Sie eine Verbindung mit einem MCP-Remoteserver her, be
    print(f"Created message, ID: {message.id}")
     ```
 
+1. Suchen Sie den Kommentar **Genehmigungsmodus festlegen** und fügen Sie den folgenden Code hinzu:
+
+    ```python
+    # Set approval mode
+    mcp_tool.set_approval_mode("never")
+    ```
+
+    Dadurch kann der Agent die MCP-Tools automatisch aufrufen, ohne dass eine Benutzergenehmigung erforderlich ist. Wenn Sie eine Genehmigung anfordern möchten, müssen Sie einen Headerwert mithilfe von `mcp_tool.update_headers` angeben.
+
 1. Suchen Sie den Kommentar **Create and process agent run in thread with MCP tools**, und fügen Sie den folgenden Code hinzu:
 
     ```python

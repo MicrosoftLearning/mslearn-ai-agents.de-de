@@ -157,7 +157,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
    ):
     ```
 
-    Beachten Sie, dass das **AzureCliCredential**-Objekt automatisch die Azure AI Foundry-Projekteinstellungen aus der Konfiguration übernimmt.
+    Beachten Sie, dass das **AzureCliCredential**-Objekt Ihrem Code die Authentifizierung bei Ihrem Azure-Konto ermöglicht. Das **AzureAIAgentClient**-Objekt enthält automatisch die Azure AI Foundry-Projekteinstellungen aus der ENV-Konfiguration.
 
 1. Suchen Sie den Kommentar **Verwenden des Agents, um die Spesendaten zu verarbeiten**, und fügen Sie den folgenden Code hinzu, um einen Thread zu erstellen, in dem Ihr Agent ausgeführt werden soll, und rufen Sie ihn dann mit einer Chatnachricht auf.
 
