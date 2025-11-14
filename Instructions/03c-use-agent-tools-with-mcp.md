@@ -6,7 +6,7 @@ lab:
 
 # Verbinden von KI-Agents mit Tools mithilfe des MCP (Model Context Protocol)
 
-In dieser Übung erstellen Sie einen Agent, der eine Verbindung mit einem in der Cloud gehosteten MCP-Server herstellt. Der Agent verwendet eine KI-gestützte Suche, um Programmierenden zu helfen, in Echtzeit genaue Antworten aus der offiziellen Dokumentation von Microsoft zu suchen. Das ist beim Erstellen von Assistenten hilfreich, die Programmierende mit aktuellen Anleitungen zu Tools wie Azure, .NET und Microsoft 365 unterstützen. Der Agent verwendet das bereitgestellte Tool `microsoft_docs_search`, um die Dokumentation abzufragen und relevante Ergebnisse zurückzugeben.
+In dieser Übung erstellen Sie einen Agent, der eine Verbindung mit einem in der Cloud gehosteten MCP-Server herstellt. Der Agent verwendet eine KI-gestützte Suche, um Programmierenden zu helfen, in Echtzeit genaue Antworten aus der offiziellen Dokumentation von Microsoft zu suchen. Das ist beim Erstellen von Assistenten hilfreich, die Programmierende mit aktuellen Anleitungen zu Tools wie Azure, .NET und Microsoft 365 unterstützen. Der Agent verwendet die verfügbaren MCP-Tools, um die Dokumentation abzufragen und relevante Ergebnisse zurückzugeben.
 
 > **Tipp**: Der in dieser Übung verwendete Code basiert auf dem MCP-Supportbeispielrepository für Azure KI-Agent-Dienst. Weitere Informationen finden Sie in [Azure OpenAI-Demos](https://github.com/retkowsky/Azure-OpenAI-demos/blob/main/Azure%20Agent%20Service/9%20Azure%20AI%20Agent%20service%20-%20MCP%20support.ipynb) oder unter [Herstellen einer Verbindung mit Model Context Protocol-Servern](https://learn.microsoft.com/en-us/azure/ai-foundry/agents/how-to/tools/model-context-protocol).
 
@@ -261,7 +261,7 @@ In dieser Aufgabe stellen Sie eine Verbindung mit einem MCP-Remoteserver her, be
     MCP Tool calls:
         Tool Call ID: <<tool-call-id>>
         Type: mcp
-        Type: microsoft_docs_search
+        Type: microsoft_code_sample_search
 
 
     Conversation:
@@ -285,7 +285,7 @@ In dieser Aufgabe stellen Sie eine Verbindung mit einem MCP-Remoteserver her, be
     Deleted agent
     ```
 
-    Beachten Sie, dass der Agent das MCP-Tool `microsoft_docs_search` automatisch aufrufen konnte, um die Anforderung zu erfüllen.
+    Beachten Sie, dass der Agent das MCP-Tool `microsoft_code_sample_search` automatisch aufrufen konnte, um die Anforderung zu erfüllen.
 
 1. Sie können die App erneut (mit dem Befehl `python client.py`) ausführen, um unterschiedliche Informationen zu erfragen. In jedem Fall versucht der Agent, eine technische Dokumentation mithilfe des MCP-Tools zu finden.
 
