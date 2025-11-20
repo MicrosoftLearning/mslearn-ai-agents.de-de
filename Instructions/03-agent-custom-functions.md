@@ -90,7 +90,7 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
     ```
    python -m venv labenv
    ./labenv/bin/Activate.ps1
-   pip install -r requirements.txt azure-ai-projects
+   pip install -r requirements.txt azure-ai-projects azure-ai-agents
     ```
 
     >**Hinweis:** Sie können alle während der Installation der Bibliothek angezeigten Warn- oder Fehlermeldungen ignorieren.

@@ -94,7 +94,7 @@ Nachdem Sie Ihr Projekt in AI Foundry erstellt haben, entwickeln wir nun eine Ap
     ```
    python -m venv labenv
    ./labenv/bin/Activate.ps1
-   pip install -r requirements.txt --pre azure-ai-projects mcp
+   pip install -r requirements.txt --pre azure-ai-projects azure-ai-agents mcp
     ```
 
     >**Hinweis:** Sie können alle während der Installation der Bibliothek angezeigten Warn- oder Fehlermeldungen ignorieren.
