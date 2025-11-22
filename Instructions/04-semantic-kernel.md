@@ -12,19 +12,21 @@ Diese Übung dauert ca. **30** Minuten.
 
 > **Hinweis**: Einige der in dieser Übung verwendeten Technologien befinden sich in der Vorschau oder in der aktiven Entwicklung. Es kann zu unerwartetem Verhalten, Warnungen oder Fehlern kommen.
 
-## Bereitstellen Sie ein DALL-E-Modell in einem Azure KI Foundry-Projekt
+## Bereitstellen eines Modells in einem Microsoft Foundry-Projekt
 
-Beginnen wir mit dem Erstellen eines Azure KI Foundry-Projekts.
+Beginnen wir mit der Bereitstellung eines Modells in einem Foundry-Projekt.
 
-1. Öffnen Sie in einem Webbrowser unter `https://ai.azure.com` das [Azure KI Foundry-Portal](https://ai.azure.com) und melden Sie sich mit Ihren Azure-Anmeldeinformationen an. Schließen Sie alle Tipps oder Schnellstartfenster, die bei der ersten Anmeldung geöffnet werden, und verwenden Sie gegebenenfalls das Logo **Azure AI Foundry** oben links, um zur Startseite zu navigieren, die ähnlich wie die folgende Abbildung aussieht (schließen Sie das **Hilfe**-Fenster, falls es geöffnet ist):
+1. Öffnen Sie in einem Webbrowser das [Foundry-Portal](https://ai.azure.com) unter `https://ai.azure.com` und melden Sie sich mit Ihren Azure-Anmeldeinformationen an. Schließen Sie alle Tipp- oder Schnellstartbereiche, die beim ersten Anmelden geöffnet werden, und verwenden Sie bei Bedarf zum Navigieren zur Startseite das **Foundry**-Logo oben links, das ähnlich wie die folgende Abbildung aussieht (schließen Sie den Bereich **Hilfe**, wenn er geöffnet ist):
 
-    ![Screenshot des Azure KI Foundry-Portals.](./Media/ai-foundry-home.png)
+    ![Screenshot des Foundry-Portals.](./Media/ai-foundry-home.png)
+
+    > **Wichtig:** Stellen Sie sicher, dass der Umschalter **Neues Foundry** für diese Übung *deaktiviert* ist.
 
 1. Suchen Sie auf der Startseite im Abschnitt **Modelle und Funktionen erkunden** nach dem Modell `gpt-4o`, das wir in unserem Projekt verwenden werden.
 1. Wählen Sie in den Suchergebnissen das Modell **gpt-4o** aus, um dessen Details anzuzeigen, und wählen Sie dann oben auf der Seite für das Modell die Option **Dieses Modell verwenden** aus.
 1. Wenn Sie zum Erstellen eines Projekts aufgefordert werden, geben Sie einen gültigen Namen für Ihr Projekt ein und erweitern Sie **Erweiterte Optionen**.
 1. Bestätigen Sie die folgenden Einstellungen für Ihr Projekt:
-    - **Azure KI Foundry-Ressource**: *Ein gültiger Name für Ihre Azure KI Foundry-Ressource*
+    - **Foundry-Ressource**: *Ein gültiger Name für Ihre Foundry-Ressource*
     - **Abonnement:** *Geben Sie Ihr Azure-Abonnement an.*
     - **Ressourcengruppe**: *Erstellen Sie eine Ressourcengruppe, oder wählen Sie eine Ressourcengruppe aus*.
     - **Region**: Wählen Sie die **empfohlene AI Foundry-Instanz aus***\*
@@ -36,7 +38,7 @@ Beginnen wir mit dem Erstellen eines Azure KI Foundry-Projekts.
 1. Notieren Sie sich im Bereich **Setup** den Namen Ihrer Modellbereitstellung, der **gpt-4o** lauten sollte. Sie können dies überprüfen, indem Sie die Bereitstellung auf der Seite **Modelle und Endpunkte** anzeigen (öffnen Sie dazu einfach diese Seite im Navigationsbereich auf der linken Seite).
 1. Wählen Sie im Navigationsbereich auf der linken Seite **Übersicht**, um die Hauptseite Ihres Projekts anzuzeigen, die wie folgt aussieht:
 
-    ![Screenshot eines Azure KI-Projekts im Azure AI Foundry-Portal.](./Media/ai-foundry-project.png)
+    ![Screenshot der Azure KI-Projektdetails im Foundry-Portal.](./Media/ai-foundry-project.png)
 
 ## Erstellen einer Agent-Client-App 
 
@@ -44,7 +46,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
 
 ### Vorbereiten der Umgebung
 
-1. Öffnen Sie eine neue Browserregisterkarte (wobei das Azure AI Foundry-Portal auf der vorhandenen Registerkarte geöffnet bleibt). Wechseln Sie dann in der neuen Registerkarte zum [Azure-Portal](https://portal.azure.com) unter `https://portal.azure.com` und melden Sie sich mit Ihren Azure-Anmeldedaten an, wenn Sie dazu aufgefordert werden.
+1. Öffnen Sie eine neue Browserregisterkarte (wobei das Foundry-Portal auf der vorhandenen Registerkarte geöffnet bleibt). Wechseln Sie dann in der neuen Registerkarte zum [Azure-Portal](https://portal.azure.com) unter `https://portal.azure.com` und melden Sie sich mit Ihren Azure-Anmeldedaten an, wenn Sie dazu aufgefordert werden.
 
     Schließen Sie alle Willkommensbenachrichtigungen, um die Startseite des Azure-Portals anzuzeigen.
 
@@ -94,7 +96,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
 
     Die Datei wird in einem Code-Editor geöffnet.
 
-1. Ersetzen Sie in der Code-Datei den Platzhalter **your_project_endpoint** durch den Endpunkt für Ihr Projekt (kopiert von der Projektseite **Übersicht** im Azure AI Foundry-Portal) und den Platzhalter **your_model_deployment** durch den Namen, den Sie Ihrer gpt-4o-Modellbereitstellung zugewiesen haben.
+1. Ersetzen Sie in der Code-Datei den Platzhalter **your_project_endpoint** durch den Endpunkt für Ihr Projekt (kopiert von der Projektseite **Übersicht** im Foundry-Portal) und den Platzhalter **your_model_deployment** durch den Namen, den Sie Ihrer gpt-4o-Modellbereitstellung zugewiesen haben.
 1. Nachdem Sie die Platzhalter ersetzt haben, verwenden Sie den Befehl **STRG+S**, um Ihre Änderungen zu speichern, und verwenden Sie dann den Befehl **STRG+Q**, um den Code-Editor zu schließen, während die Befehlszeile der Cloud Shell geöffnet bleibt.
 
 ### Schreiben von Code für eine Agent-App.
@@ -157,7 +159,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
    ):
     ```
 
-    Beachten Sie, dass das **AzureCliCredential**-Objekt Ihrem Code die Authentifizierung bei Ihrem Azure-Konto ermöglicht. Das **AzureAIAgentClient**-Objekt enthält automatisch die Azure AI Foundry-Projekteinstellungen aus der ENV-Konfiguration.
+    Beachten Sie, dass das **AzureCliCredential**-Objekt Ihrem Code die Authentifizierung bei Ihrem Azure-Konto ermöglicht. Das Objekt **AzureAIAgentClient** enthält automatisch die Foundry-Projekteinstellungen aus der .env-Konfiguration.
 
 1. Suchen Sie den Kommentar **Verwenden des Agents, um die Spesendaten zu verarbeiten**, und fügen Sie den folgenden Code hinzu, um einen Thread zu erstellen, in dem Ihr Agent ausgeführt werden soll, und rufen Sie ihn dann mit einer Chatnachricht auf.
 
@@ -192,7 +194,7 @@ Jetzt können Sie eine Client-App erstellen, die einen Agent sowie eine benutzer
 
     > **Hinweis**: In den meisten Szenarien ist nur die Verwendung von *az login* ausreichend. Wenn Sie jedoch Abonnements in mehreren Mandqanten haben, müssen Sie möglicherweise den Mandanten mit dem Parameter *--tenant* angeben. Weitere Informationen finden Sie unter [Interaktive Anmeldung bei Azure mit der Azure CLI](https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively).
     
-1. Wenn Sie dazu aufgefordert werden, folgen Sie den Anweisungen, um die Anmeldeseite in einer neuen Registerkarte zu öffnen, und geben Sie den angegebenen Authentifizierungscode und Ihre Azure-Anmeldeinformationen ein. Schließen Sie dann den Anmeldevorgang in der Befehlszeile ab, und wählen Sie das Abonnement aus, das Ihren Azure AI Foundry Hub enthält, wenn Sie dazu aufgefordert werden.
+1. Wenn Sie dazu aufgefordert werden, folgen Sie den Anweisungen, um die Anmeldeseite in einer neuen Registerkarte zu öffnen, und geben Sie den angegebenen Authentifizierungscode und Ihre Azure-Anmeldeinformationen ein. Schließen Sie dann den Anmeldevorgang in der Befehlszeile ab und wählen Sie das Abonnement mit Ihrem Foundry-Hub aus, wenn Sie dazu aufgefordert werden.
 1. Geben Sie nach der Anmeldung den folgenden Befehl ein, um die Anwendung auszuführen:
 
     ```

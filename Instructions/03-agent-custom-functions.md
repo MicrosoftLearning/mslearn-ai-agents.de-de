@@ -8,24 +8,26 @@ lab:
 
 In dieser Übung erfahren Sie, wie Sie einen Agent erstellen, der benutzerdefinierte Funktionen als Tool zum Ausführen von Aufgaben verwenden kann. Sie erstellen einen einfachen technischen Support Agent, der Details zu einem technischen Problem sammeln und ein Supportticket generieren kann.
 
-> **Tipp**: Der in dieser Übung verwendete Code basiert auf dem Azure AI Foundry SDK für Python. Sie können ähnliche Lösungen mithilfe der SDKs für Microsoft .NET, JavaScript und Java entwickeln. Ausführliche Informationen finden Sie unter [Azure AI Foundry SDK-Clientbibliotheken](https://learn.microsoft.com/azure/ai-foundry/how-to/develop/sdk-overview).
+> **Tipp**: Der in dieser Übung verwendete Code basiert auf dem Microsoft Foundry SDK für Python. Sie können ähnliche Lösungen mithilfe der SDKs für Microsoft .NET, JavaScript und Java entwickeln. Ausführliche Informationen finden Sie unter [Microsoft Foundry SDK-Clientbibliotheken](https://learn.microsoft.com/azure/ai-foundry/how-to/develop/sdk-overview).
 
 Diese Übung dauert ca. **30** Minuten.
 
 > **Hinweis**: Einige der in dieser Übung verwendeten Technologien befinden sich in der Vorschau oder in der aktiven Entwicklung. Es kann zu unerwartetem Verhalten, Warnungen oder Fehlern kommen.
 
-## Erstellen eines Azure KI Foundry-Projekts
+## Erstellen eines Foundry-Projekts
 
-Beginnen wir mit dem Erstellen eines Azure AI Foundry-Projekts.
+Beginnen wir mit dem Erstellen eines Foundry-Projekts.
 
-1. Öffnen Sie in einem Webbrowser unter `https://ai.azure.com` das [Azure KI Foundry-Portal](https://ai.azure.com) und melden Sie sich mit Ihren Azure-Anmeldeinformationen an. Schließen Sie alle Tipps oder Schnellstartfenster, die bei der ersten Anmeldung geöffnet werden, und verwenden Sie gegebenenfalls das Logo **Azure AI Foundry** oben links, um zur Startseite zu navigieren, die ähnlich wie die folgende Abbildung aussieht (schließen Sie das **Hilfe**-Fenster, falls es geöffnet ist):
+1. Öffnen Sie in einem Webbrowser das [Foundry-Portal](https://ai.azure.com) unter `https://ai.azure.com` und melden Sie sich mit Ihren Azure-Anmeldeinformationen an. Schließen Sie alle Tipp- oder Schnellstartbereiche, die beim ersten Anmelden geöffnet werden, und verwenden Sie bei Bedarf zum Navigieren zur Startseite das **Foundry**-Logo oben links, das ähnlich wie die folgende Abbildung aussieht (schließen Sie den Bereich **Hilfe**, wenn er geöffnet ist):
 
-    ![Screenshot des Azure KI Foundry-Portals.](./Media/ai-foundry-home.png)
+    ![Screenshot des Foundry-Portals.](./Media/ai-foundry-home.png)
+
+    > **Wichtig:** Stellen Sie sicher, dass der Umschalter **Neues Foundry** für diese Übung *deaktiviert* ist.
 
 1. Wählen Sie auf der Startseite **Agent erstellen**.
 1. Wenn Sie zur Erstellung eines Projekts aufgefordert werden, geben Sie einen gültigen Namen für Ihr Projekt ein und entfalten Sie die Option **Erweiterte Optionen**.
 1. Bestätigen Sie die folgenden Einstellungen für Ihr Projekt:
-    - **Azure KI Foundry-Ressource**: *Ein gültiger Name für Ihre Azure KI Foundry-Ressource*
+    - **Foundry-Ressource**: *Ein gültiger Name für Ihre Foundry-Ressource*
     - **Abonnement:** *Geben Sie Ihr Azure-Abonnement an.*
     - **Ressourcengruppe**: *Erstellen Sie eine Ressourcengruppe, oder wählen Sie eine Ressourcengruppe aus*.
     - **Region**: Wählen Sie die **empfohlene AI Foundry-Instanz aus***\*
@@ -41,9 +43,9 @@ Beginnen wir mit dem Erstellen eines Azure AI Foundry-Projekts.
 
 1. Wählen Sie im Navigationsbereich auf der linken Seite **Übersicht**, um die Hauptseite Ihres Projekts anzuzeigen, die wie folgt aussieht:
 
-    ![Screenshot einer Projektübersichtsseite von Azure AI Foundry.](./Media/ai-foundry-project.png)
+    ![Screenshot der Übersicht eines Foundry-Projekts.](./Media/ai-foundry-project.png)
 
-1. Kopieren Sie die Werte für den **Endpunkt des Azure AI Foundry-Projekts** in einen Notizblock, da Sie diese für die Verbindung mit Ihrem Projekt in einer Clientanwendung benötigen.
+1. Kopieren Sie die Werte des **Foundry-Projektendpunkts** in einen Editor, da Sie diese für die Verbindung mit Ihrem Projekt in einer Clientanwendung benötigen.
 
 ## Entwickeln eines Agents, der Funktionstools verwendet
 
@@ -51,7 +53,7 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
 
 ### Klonen des Repositorys mit dem Anwendungscode
 
-1. Öffnen Sie eine neue Browserregisterkarte (wobei das Azure AI Foundry-Portal auf der vorhandenen Registerkarte geöffnet bleibt). Wechseln Sie dann in der neuen Registerkarte zum [Azure-Portal](https://portal.azure.com) unter `https://portal.azure.com` und melden Sie sich mit Ihren Azure-Anmeldedaten an, wenn Sie dazu aufgefordert werden.
+1. Öffnen Sie eine neue Browserregisterkarte (wobei das Foundry-Portal auf der vorhandenen Registerkarte geöffnet bleibt). Wechseln Sie dann in der neuen Registerkarte zum [Azure-Portal](https://portal.azure.com) unter `https://portal.azure.com` und melden Sie sich mit Ihren Azure-Anmeldedaten an, wenn Sie dazu aufgefordert werden.
 
     Schließen Sie alle Willkommensbenachrichtigungen, um die Startseite des Azure-Portals anzuzeigen.
 
@@ -103,7 +105,7 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
 
     Die Datei wird in einem Code-Editor geöffnet.
 
-1. Ersetzen Sie in der Codedatei den Platzhalter **your_project_endpoint** durch den Endpunkt für Ihr Projekt (kopiert aus der Projektseite **Übersicht** im Azure AI Foundry-Portal), und stellen Sie sicher, dass die Variable MODEL_DEPLOYMENT_NAME auf den Namen Ihrer Modellbereitstellung festgelegt ist (dies sollte *gpt-4o* sein).
+1. Ersetzen Sie in der Codedatei den Platzhalter **your_project_endpoint** durch den Endpunkt für Ihr Projekt (kopiert aus der Projektseite **Übersicht** im Foundry-Portal) und stellen Sie sicher, dass die Variable MODEL_DEPLOYMENT_NAME auf den Namen Ihrer Modellimplementierung festgelegt ist (dies sollte *gpt-4o* sein).
 1. Nachdem Sie den Platzhalter ersetzt haben, speichern Sie Ihre Änderungen mit dem Befehl **STRG+S** und schließen Sie den Code-Editor mit dem Befehl **STRG+Q**, wobei die Cloud Shell-Befehlszeile geöffnet bleibt.
 
 ### Definieren einer benutzerdefinierten Funktion
@@ -279,7 +281,7 @@ Nachdem Sie nun Ihr Projekt in AI Foundry erstellt haben, entwickeln wir eine Ap
 
     > **Hinweis**: In den meisten Szenarien ist nur die Verwendung von *az login* ausreichend. Wenn Sie jedoch Abonnements in mehreren Mandqanten haben, müssen Sie möglicherweise den Mandanten mit dem Parameter *--tenant* angeben. Weitere Informationen finden Sie unter [Interaktive Anmeldung bei Azure mit der Azure CLI](https://learn.microsoft.com/cli/azure/authenticate-azure-cli-interactively).
     
-1. Wenn Sie dazu aufgefordert werden, folgen Sie den Anweisungen, um die Anmeldeseite in einer neuen Registerkarte zu öffnen, und geben Sie den angegebenen Authentifizierungscode und Ihre Azure-Anmeldeinformationen ein. Schließen Sie dann den Anmeldevorgang in der Befehlszeile ab, und wählen Sie das Abonnement aus, das Ihren Azure AI Foundry Hub enthält, wenn Sie dazu aufgefordert werden.
+1. Wenn Sie dazu aufgefordert werden, folgen Sie den Anweisungen, um die Anmeldeseite in einer neuen Registerkarte zu öffnen, und geben Sie den angegebenen Authentifizierungscode und Ihre Azure-Anmeldeinformationen ein. Schließen Sie dann den Anmeldevorgang in der Befehlszeile ab und wählen Sie das Abonnement mit Ihrem Foundry-Hub aus, wenn Sie dazu aufgefordert werden.
 1. Geben Sie nach der Anmeldung den folgenden Befehl ein, um die Anwendung auszuführen:
 
     ```

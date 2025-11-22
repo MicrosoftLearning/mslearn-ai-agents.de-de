@@ -1,29 +1,31 @@
 ---
 lab:
   title: Erkunden der KI-Agent-Entwicklung
-  description: 'Führen Sie Ihre ersten Schritte bei der Entwicklung von KI-Agents durch, indem Sie den Azure AI Agent-Dienst im Azure AI Foundry-Portal erkunden.'
+  description: 'Führen Sie Ihre ersten Schritte bei der Entwicklung von KI-Agents durch, indem Sie den Azure KI-Agent-Dienst im Microsoft Foundry-Portal erkunden.'
 ---
 
 # Erkunden der KI-Agent-Entwicklung
 
-In dieser Übung verwenden Sie den Azure AI Agent-Dienst im Azure AI Foundry-Portal, um einen einfachen KI-Agent zu erstellen, der Mitarbeitende bei Ausgabenabrechnungen unterstützt.
+In dieser Übung verwenden Sie den Azure KI-Agent-Dienst im Microsoft Foundry-Portal, um einen einfachen KI-Agent zu erstellen, der Mitarbeitende bei Ausgabenabrechnungen unterstützt.
 
 Diese Übung dauert ca. **30** Minuten.
 
 > **Hinweis**: Einige der in dieser Übung verwendeten Technologien befinden sich in der Vorschau oder in der aktiven Entwicklung. Es kann zu unerwartetem Verhalten, Warnungen oder Fehlern kommen.
 
-## Erstellen Sie ein Azure AI Foundry-Projekt und einen Agenten.
+## Erstellen eines Foundry-Projekts und -Agents
 
-Beginnen wir mit dem Erstellen eines Azure AI Foundry-Projekts.
+Beginnen wir mit dem Erstellen eines Foundry-Projekts.
 
-1. Öffnen Sie in einem Webbrowser unter `https://ai.azure.com` das [Azure KI Foundry-Portal](https://ai.azure.com) und melden Sie sich mit Ihren Azure-Anmeldeinformationen an. Schließen Sie alle Tipps oder Schnellstartfenster, die bei der ersten Anmeldung geöffnet werden, und verwenden Sie gegebenenfalls das Logo **Azure AI Foundry** oben links, um zur Startseite zu navigieren, die ähnlich wie die folgende Abbildung aussieht (schließen Sie das **Hilfe**-Fenster, falls es geöffnet ist):
+1. Öffnen Sie in einem Webbrowser das [Foundry-Portal](https://ai.azure.com) unter `https://ai.azure.com` und melden Sie sich mit Ihren Azure-Anmeldeinformationen an. Schließen Sie alle Tipp- oder Schnellstartbereiche, die beim ersten Anmelden geöffnet werden, und verwenden Sie bei Bedarf zum Navigieren zur Startseite das **Foundry**-Logo oben links, das ähnlich wie die folgende Abbildung aussieht (schließen Sie den Bereich **Hilfe**, wenn er geöffnet ist):
 
-    ![Screenshot des Azure KI Foundry-Portals.](./Media/ai-foundry-home.png)
+    ![Screenshot des Foundry-Portals.](./Media/ai-foundry-home.png)
+
+    > **Wichtig:** Stellen Sie sicher, dass der Umschalter **Neues Foundry** für diese Übung *deaktiviert* ist.
 
 1. Wählen Sie auf der Startseite **Agent erstellen**.
 1. Geben Sie bei der Eingabeaufforderung zum Erstellen eines Projekts einen gültigen Namen für Ihr Projekt ein.
 1. Erweitern Sie **Erweiterte Optionen** und nehmen Sie die folgenden Einstellungen vor:
-    - **Azure KI Foundry-Ressource**: *Ein gültiger Name für Ihre Azure KI Foundry-Ressource*
+    - **Foundry-Ressource**: *Ein gültiger Name für Ihre Foundry-Ressource*
     - **Abonnement:** *Geben Sie Ihr Azure-Abonnement an.*
     - **Ressourcengruppe**: *Wählen Sie Ihre Ressourcengruppe aus oder erstellen Sie eine neue*.
     - **Region**: *Wählen Sie eine beliebige **empfohlene AI Foundry-Instanz***\** aus.
@@ -37,7 +39,7 @@ Beginnen wir mit dem Erstellen eines Azure AI Foundry-Projekts.
 
 1. Nach dem Erstellen Ihres Projekts wird automatisch der Agenten-Playground geöffnet, sodass Sie ein Modell auswählen oder bereitstellen können:
 
-    ![Screenshot eines Azure AI Foundry-Projekts „Agents Playground“.](./Media/ai-foundry-agents-playground.png)
+    ![Screenshot eines Agents-Playgrounds in einem Foundry-Projekt.](./Media/ai-foundry-agents-playground.png)
 
     >**Hinweis**: Bei der Erstellung Ihres Agenten und Ihres Projekts wird automatisch ein GPT-4o-Basismodell bereitgestellt.
 
@@ -57,7 +59,7 @@ Nachdem Sie nun ein Modell bereitgestellt haben, können Sie einen KI-Agent erst
    If a user wants to submit an expense claim, you get their email address, a description of the claim, and the amount to be claimed and write the claim details to a text file that the user can download.
     ```
 
-    ![Screenshot der KI-Agent-Einrichtungsseite im Azure AI Foundry-Portal.](./Media/ai-agent-setup.png)
+    ![Screenshot der KI-Agent-Einrichtungsseite im Foundry-Portal.](./Media/ai-agent-setup.png)
 
 1. Weiter unten im Bereich **Einstellungen**, neben der Überschrift **Wissen**, wählen Sie **+ Hinzufügen**. Wählen Sie dann im Dialogfeld **Wissen hinzufügen** die Option **Dateien**.
 1. Erstellen Sie im Dialogfeld **Dateien hinzufügen** einen neuen Vektorspeicher mit dem Namen `Expenses_Vector_Store`, indem Sie die zuvor heruntergeladene lokale Datei **Expenses_policy.docx** hochladen und speichern.
@@ -79,7 +81,7 @@ Nachdem Sie einen Agenten erstellt haben, können Sie ihn im Chat des Playground
 1. Übermitteln Sie eine Eingabeaufforderung, die den Anspruch und den Betrag beschreibt; zum Beispiel: `Breakfast cost me $20`.
 1. Der Agent sollte den Code-Interpreter verwenden, um die Textdatei für die Spesenabrechnung vorzubereiten und einen Link bereitzustellen, damit Sie sie herunterladen können.
 
-    ![Screenshot des Agent Playground im Azure AI Foundry Portal.](./Media/ai-agent-playground.png)
+    ![Screenshot des Agent-Playgrounds im Foundry Portal.](./Media/ai-agent-playground.png)
 
 1. Laden Sie das Textdokument herunter, und öffnen Sie es, um die Ausgabenanspruchsdetails anzuzeigen.
 
